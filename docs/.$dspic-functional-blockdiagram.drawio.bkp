@@ -1,0 +1,454 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/25.0.2 Chrome/128.0.6613.186 Electron/32.2.5 Safari/537.36" version="25.0.2" pages="2">
+  <diagram id="ctrl-block" name="Control Block Diagram">
+    <mxGraphModel dx="3585" dy="2090" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="title" value="dsPIC33AK512MPS506 LVPFC — Control Block Diagram" style="text;html=1;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="560" y="20" width="600" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-hw" value="External Hardware" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=9;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="50" y="20" width="120" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-periph" value="MCU Peripheral" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=9;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="180" y="20" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-sw" value="Software Block" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=9;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="300" y="20" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="legend-fault" value="Fault/Protection" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CC0000;fontColor=#CC0000;fontSize=9;fontStyle=1;strokeWidth=2;dashed=1;" parent="1" vertex="1">
+          <mxGeometry x="420" y="20" width="110" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-ct1" value="CT1&#xa;(Phase A Current)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="422.5" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="cyTkTJyBwRQ4BW0SE2pY-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="hw-psa" target="hw-ct1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-psa" value="Power Stage A&#xa;Boost MOSFET&#xa;+ Inductor + Diode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="275" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-ac" value="AC Mains Input&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="120" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-bulk" value="Output Bulk Caps&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="1470" y="280" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-ct2" value="CT2&#xa;(Phase B Current)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="775" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="cyTkTJyBwRQ4BW0SE2pY-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="hw-psb" target="hw-ct2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-psb" value="Power Stage B&#xa;Boost MOSFET&#xa;+ Inductor + Diode" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=10;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="640" width="160" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="hw-relay" value="Relay K1&#xa;NTC Bypass&#xa;(RC8)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#1A1A1A;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="1250" y="1005" width="160" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p-dac2" value="DAC2&#xa;3.0V threshold&#xa;→ CMP2 ref" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="700" y="520" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p-cmp2" value="Comparator 2&#xa;(CMP2D input)&#xa;Phase A OC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="920" y="520" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p-adc2" value="ADC2 Core&#xa;CH0: AN4 (CS1)&#xa;Trig: PWM1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="920" y="417.5" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p-pwm1" value="PWM Generator 1&#xa;PG1, 100kHz&#xa;PWM1H output&#xa;Triggers ADC2+ADC4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="920" y="270" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p-adc4" value="ADC4 Core&#xa;CH0: AN2 (VAC)&#xa;CH1: AN5 (VPFC)&#xa;CH2: AN1 (Temp)&#xa;Trig: PWM1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="920" y="130" width="150" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="p-dac1" value="DAC1&#xa;Debug Out&#xa;(DACOUT1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=9;" parent="1" vertex="1">
+          <mxGeometry x="920" y="1110" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="p-adc3" value="ADC3 Core&#xa;CH0: AN0 (CS2)&#xa;Trig: PWM2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="920" y="770" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p-pwm2" value="PWM Generator 2&#xa;PG2, 100kHz, 180°&#xa;PWM2H output&#xa;Triggers ADC3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="920" y="635" width="150" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="p-cmp3" value="Comparator 3&#xa;(CMP3A input)&#xa;Phase B OC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="920" y="880" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p-dac3" value="DAC3&#xa;3.0V threshold&#xa;→ CMP3 ref" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="700" y="880" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="p-tmr1" value="Timer1&#xa;100µs tick&#xa;PR1=9999" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="105" y="900" width="150" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="sw-isr2" target="sw-cref" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;strokeColor=#CCCCCC;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontColor=#FFFFFF;fontStyle=0;labelBackgroundColor=#333333;endArrow=classic;" parent="1" source="sw-isr2" target="sw-vrms" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="480" />
+              <mxPoint x="400" y="610" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-10" value="every 4th ISR" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rounded=1;strokeColor=#CCCCCC;fontFamily=Helvetica;fontSize=9;fontColor=#FFFFFF;fontStyle=0;labelBackgroundColor=#333333;" parent="IVOvkrxytySFKAQ5kUGb-2" vertex="1" connectable="0">
+          <mxGeometry x="0.145" y="1" relative="1" as="geometry">
+            <mxPoint x="-41" y="64" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sw-isr2" value="_AD2CH0Interrupt()&amp;nbsp; &amp;nbsp;(Phase A ISR)&lt;br&gt;Reads CS1, Fault check: pfcBulkVoltageFiltered&lt;div&gt;calls:&lt;br&gt;Voltage_Compensator, Current_Reference_Calculation, Current_Compensator,&lt;div&gt;RMS_CurrentCalculation,&lt;/div&gt;&lt;div&gt;VRMS_Calculation&lt;/div&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="540" y="390" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-vcomp" value="Voltage_Compensator()&lt;br&gt;Inputs to Voltage 2P2Z:&amp;nbsp;&lt;div&gt;pfcBulkVoltageFiltered&lt;br&gt;pfcVoltageRef&lt;/div&gt;&lt;div&gt;Calculates: pfcVoltCompOutput&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="110" y="140" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-cref" value="Current_Reference_Calculation()&lt;br&gt;pfcCurrentRef =&lt;br&gt;vacFiltered × pfcVoltCompOutput&lt;br&gt;÷ Vpeak²" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="110" y="415" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-13" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;dashed=1;strokeColor=#CCCCCC;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontColor=#FFFFFF;labelBackgroundColor=#333333;endArrow=classic;" parent="1" source="sw-ccomp1" target="sw-cref" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-14" value="vacFiltered" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rounded=1;dashed=1;strokeColor=#CCCCCC;fontFamily=Helvetica;fontSize=9;fontColor=#FFFFFF;labelBackgroundColor=#333333;" parent="IVOvkrxytySFKAQ5kUGb-13" vertex="1" connectable="0">
+          <mxGeometry x="-0.0328" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sw-ccomp1" value="Current_Compensator()&lt;br&gt;Inputs to Phase A 2p2z current comp:&lt;br&gt;pfcCurrent &amp;amp; pfcCurrentRef&lt;br&gt;Calculates: PG1DC &amp;amp; vacFiltered" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="540" y="270" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.25;entryDx=0;entryDy=0;curved=0;dashed=1;" parent="1" source="sw-isr4" target="sw-vcomp" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-4" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-size: 9px; background-color: rgb(51, 51, 51);&quot;&gt;pfcBulkVoltageFiltered&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IVOvkrxytySFKAQ5kUGb-3" vertex="1" connectable="0">
+          <mxGeometry x="0.0006" y="-2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;dashed=1;strokeColor=#CCCCCC;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontColor=#FFFFFF;labelBackgroundColor=#333333;endArrow=classic;" parent="1" source="sw-isr4" target="sw-ccomp1" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="490" y="185" />
+              <mxPoint x="490" y="288" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-7" value="&lt;span style=&quot;color: rgb(255, 255, 255); font-size: 10px; text-wrap: wrap; background-color: rgb(27, 29, 30);&quot;&gt;outputBulkVoltage&lt;/span&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];rounded=1;dashed=1;strokeColor=#CCCCCC;fontFamily=Helvetica;fontSize=9;fontColor=#FFFFFF;labelBackgroundColor=#333333;" parent="IVOvkrxytySFKAQ5kUGb-5" vertex="1" connectable="0">
+          <mxGeometry x="0.0619" y="-7" relative="1" as="geometry">
+            <mxPoint x="37" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-8" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.25;entryDx=0;entryDy=0;dashed=1;strokeColor=#CCCCCC;align=center;verticalAlign=middle;fontFamily=Helvetica;fontSize=9;fontColor=#FFFFFF;labelBackgroundColor=#333333;endArrow=classic;" parent="1" source="sw-isr4" target="sw-ccomp2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="470" y="170" />
+              <mxPoint x="470" y="653" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-9" value="outputBulkVoltage" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=9;rounded=1;dashed=1;strokeColor=#CCCCCC;fontFamily=Helvetica;fontColor=#FFFFFF;labelBackgroundColor=#333333;" parent="IVOvkrxytySFKAQ5kUGb-8" vertex="1" connectable="0">
+          <mxGeometry x="-0.0613" y="2" relative="1" as="geometry">
+            <mxPoint x="8" y="243" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-11" style="edgeStyle=orthogonalEdgeStyle;rounded=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;curved=0;dashed=1;" parent="1" source="sw-isr4" target="sw-ccomp1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IVOvkrxytySFKAQ5kUGb-12" value="vacAvg" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="IVOvkrxytySFKAQ5kUGb-11" vertex="1" connectable="0">
+          <mxGeometry x="-0.0571" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sw-isr4" value="_AD4CH2Interrupt&lt;br&gt;Reads: VPFC, VAC, Temp&lt;div&gt;Calculates: pfcBulkVoltageFiltered,&amp;nbsp;&lt;/div&gt;&lt;div&gt;outputBulkVoltage(Q15), vacAvg&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="540" y="140" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-vrms" value="VRMS_Calculation()&lt;br&gt;Finds Peak: vacPeak&lt;div&gt;Calculates: denCurrRefCalc_Avg (Vpeak²)&lt;br&gt;(feedforward denominator)&lt;br&gt;Runs every 4th ISR&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="110" y="575" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-fault" value="Fault Monitoring&#xa;OV detect (ISR)&#xa;UV/OV/OC counters&#xa;(scheduler)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="40" y="730" width="170" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-isr3" value="_AD3CH0Interrupt()&amp;nbsp; &amp;nbsp;(Phase B ISR)&lt;br&gt;Reads CS2, calls Current_Compensator_Two" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="540" y="767.5" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-ccomp2" value="Current_Compensator_Two()&lt;br&gt;Inputs to Phase A 2p2z current comp:&lt;br&gt;pfcCurrent2 &amp;amp; pfcCurrentRef&lt;br&gt;Calculates: PG2DC" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="540" y="635" width="200" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-sched" value="_T1Interrupt / Scheduler&#xa;100µs + 1ms task dispatch&#xa;leader/follower pattern" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="80" y="1002.5" width="200" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-sm" value="PwrCtrl_PFC_Task_100us()&#xa;State Machine&#xa;(INIT→STANDBY→RELAY_WAIT&#xa;→SOFT_START→NORMAL→OFF)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="330" y="995" width="200" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="sw-relay" value="RelayControl()&#xa;Brown-in 600ms / out 30ms&#xa;→ LATC8" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" parent="1" vertex="1">
+          <mxGeometry x="570" y="1005" width="170" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="a01" value="AN4" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="hw-ct1" target="p-adc2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a02" value="AN0" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="hw-ct2" target="p-adc3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a03" value="AN2 (VAC)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;entryX=1;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="hw-ac" target="p-adc4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a27" value="AN5 (VPFC)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="hw-bulk" target="p-adc4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1540" y="240" />
+              <mxPoint x="1130" y="240" />
+              <mxPoint x="1130" y="190" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a04" value="AD2CH0DATA" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;" parent="1" source="p-adc2" target="sw-isr2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a05" value="AD3CH0DATA" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;" parent="1" source="p-adc3" target="sw-isr3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a06" value="AD4CH0/1/2" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;" parent="1" source="p-adc4" target="sw-isr4" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a07" value="" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=1;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="sw-isr2" target="sw-vcomp" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="400" y="420" />
+              <mxPoint x="400" y="193" />
+              <mxPoint x="310" y="193" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a08" value="pfcVoltCompOutput" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;entryX=0.25;entryY=0;entryDx=0;entryDy=0;dashed=1;exitX=0.25;exitY=1;exitDx=0;exitDy=0;" parent="1" source="sw-vcomp" target="sw-cref" edge="1">
+          <mxGeometry x="-0.5294" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="160" y="260" />
+              <mxPoint x="160" y="260" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a09" value="pfcCurrentRef" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;dashed=1;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="sw-cref" target="sw-ccomp1" edge="1">
+          <mxGeometry x="0.6596" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="370" />
+              <mxPoint x="430" y="370" />
+              <mxPoint x="430" y="322" />
+              <mxPoint x="540" y="322" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a10" value="pfcCurrentRef" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;exitX=0.75;exitY=1;exitDx=0;exitDy=0;dashed=1;" parent="1" source="sw-cref" target="sw-ccomp2" edge="1">
+          <mxGeometry x="0.7257" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="260" y="500" />
+              <mxPoint x="430" y="500" />
+              <mxPoint x="430" y="670" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a11" value="PG1DC" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;fontStyle=0;rounded=1;align=center;verticalAlign=middle;fontFamily=Helvetica;endArrow=classic;" parent="1" source="sw-ccomp1" target="p-pwm1" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a12" value="PG2DC" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;fontStyle=0;" parent="1" source="sw-ccomp2" target="p-pwm2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a13" value="PWM1H" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;fontStyle=0;rounded=1;align=center;verticalAlign=middle;fontFamily=Helvetica;endArrow=classic;" parent="1" source="p-pwm1" target="hw-psa" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a14" value="PWM2H" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;fontStyle=0;rounded=1;align=center;verticalAlign=middle;fontFamily=Helvetica;endArrow=classic;" parent="1" source="p-pwm2" target="hw-psb" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a15" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;" parent="1" source="hw-psa" target="hw-bulk" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a16" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;" parent="1" source="hw-psb" target="hw-bulk" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a18" value="denCurrRefCalc_Avg&#xa;(Vpeak²)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;dashed=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="sw-vrms" target="sw-cref" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="210" y="500" />
+              <mxPoint x="210" y="500" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a20" value="adc_trig_C" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;fontColor=#FFFFFF;labelBackgroundColor=#555555;fontSize=8;dashed=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="p-pwm1" target="p-adc2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="995" y="360" />
+              <mxPoint x="995" y="360" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a21" value="adc_trig_A" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;fontColor=#FFFFFF;labelBackgroundColor=#555555;fontSize=8;dashed=1;" parent="1" source="p-pwm2" target="p-adc3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1050" y="670" />
+              <mxPoint x="1050" y="797.5" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a22" value="100µs IRQ" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;" parent="1" source="p-tmr1" target="sw-sched" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a23" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;" parent="1" source="sw-sched" target="sw-sm" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a24" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;" parent="1" source="sw-sm" target="sw-relay" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a25" value="RC8 / LATC8" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;" parent="1" source="sw-relay" target="hw-relay" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="a26" value="OV detect: faultState = FAULT_OUTPUTOVERVOLTAGE" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=9;dashed=1;rounded=1;strokeWidth=2;align=center;verticalAlign=middle;fontFamily=Helvetica;endArrow=classic;" parent="1" source="sw-isr2" target="sw-fault" edge="1">
+          <mxGeometry x="0.562" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="640" y="560" />
+              <mxPoint x="410" y="560" />
+              <mxPoint x="410" y="765" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="a28" value="pfcCurrent2" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=9;" parent="1" source="sw-isr3" target="sw-ccomp2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f01" value="3.0V ref" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=9;dashed=1;strokeWidth=2;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="p-dac2" target="p-cmp2" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f02" value="CS1 analog" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=9;dashed=1;strokeWidth=2;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="hw-ct1" target="p-cmp2" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210" y="445" />
+              <mxPoint x="1210" y="550" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f03" value="PCI fault → cycle-by-cycle limit" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=9;dashed=1;strokeWidth=2;exitX=0;exitY=0.25;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="p-cmp2" target="p-pwm1" edge="1">
+          <mxGeometry x="0.3306" y="-10" relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="534" />
+              <mxPoint x="880" y="323" />
+              <mxPoint x="920" y="323" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f04" value="3.0V ref" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=9;dashed=1;strokeWidth=2;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="p-dac3" target="p-cmp3" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="f05" value="CS2 analog" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=9;dashed=1;strokeWidth=2;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="hw-ct2" target="p-cmp3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1210" y="798" />
+              <mxPoint x="1210" y="908" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="f06" value="PCI fault → cycle-by-cycle limit" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=9;dashed=1;strokeWidth=2;entryX=0;entryY=0.75;entryDx=0;entryDy=0;exitX=0;exitY=0.25;exitDx=0;exitDy=0;" parent="1" source="p-cmp3" target="p-pwm2" edge="1">
+          <mxGeometry x="0.3539" relative="1" as="geometry">
+            <mxPoint x="995" y="920" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="880" y="894" />
+              <mxPoint x="880" y="688" />
+            </Array>
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="cyTkTJyBwRQ4BW0SE2pY-4" value="adc_trig_A" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;fontColor=#FFFFFF;labelBackgroundColor=#555555;fontSize=8;dashed=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="p-pwm1" target="p-adc4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="995" y="240" />
+              <mxPoint x="995" y="240" />
+            </Array>
+            <mxPoint x="810" y="202" as="sourcePoint" />
+            <mxPoint x="810" y="280" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="state-machine" name="State Machine">
+    <mxGraphModel dx="2868" dy="1672" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sm-title" value="PFC Power Control State Machine — PwrCtrl_PFC_Task_100us()" style="text;html=1;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#FFFFFF;" parent="1" vertex="1">
+          <mxGeometry x="70" y="20" width="550" height="35" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-sub" value="Called every 100µs from Timer1 ISR via OS Scheduler" style="text;html=1;align=center;verticalAlign=middle;fontSize=11;fontStyle=2;fontColor=#CCCCCC;" parent="1" vertex="1">
+          <mxGeometry x="120" y="50" width="400" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-init" value="PCS_INIT (1)&#xa;&#xa;• initPFCComp()&#xa;• Initialize 2P2Z coefficients&#xa;• Reset compensator history" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;align=center;" parent="1" vertex="1">
+          <mxGeometry x="235" y="120" width="200" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-standby" value="PCS_STANDBY (2)&#xa;&#xa;• PG1DC = 0, PG2DC = 0 (PWM off)&#xa;• RegulationMode = DISABLED&#xa;• PFCCompReset()&#xa;• sftStrtInitVoltage = DISABLED&#xa;• relay_on_wait_cnt = 0" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;align=center;" parent="1" vertex="1">
+          <mxGeometry x="220" y="270" width="230" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-rwait" value="PCS_RELAYON_WAIT (3)&#xa;&#xa;• Wait for pfcStateFlags.RelayOn&#xa;• Wait 200ms (relay_on_wait_cnt)&#xa;• Wait for pfcVacSate == STATE_VAC_ZERO&#xa;  (zero-cross synchronization)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;align=center;" parent="1" vertex="1">
+          <mxGeometry x="210" y="470" width="250" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-sstart" value="PCS_SOFT_START (4)&#xa;&#xa;• SoftStart() ramps pfcVoltageRef&#xa;• Delta = (target - initial) / 500&#xa;• Increments every SOFT_START_COUNT&#xa;• Exits when Vref &gt;= PFCVOLTAGEREFADC&#xa;• Sets RegulationMode = ENABLED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;align=center;" parent="1" vertex="1">
+          <mxGeometry x="215" y="640" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-normal" value="PCS_NORMAL (5)&#xa;&#xa;• Full voltage + current regulation&#xa;• VRMS monitoring&#xa;• RMS power calculation&#xa;• PFC_OK signal management&#xa;• Continuous fault monitoring" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#003399;fontColor=#FFFFFF;fontSize=10;align=center;strokeWidth=3;" parent="1" vertex="1">
+          <mxGeometry x="215" y="840" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-off" value="PCS_OFF (6)&#xa;&#xa;• PG1DC = 0, PG2DC = 0 (PWM off)&#xa;• RegulationMode = DISABLED&#xa;• Fault lockout — requires&#xa;  power cycle or fault clear" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#CC0000;fontColor=#FFFFFF;fontSize=10;align=center;strokeWidth=3;" parent="1" vertex="1">
+          <mxGeometry x="650" y="840" width="240" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="st1" value="init done" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=10;" parent="1" source="sm-init" target="sm-standby" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="st2" value="AC input valid&#xa;(CheckVacInputOK)&#xa;&amp; no faults" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=10;" parent="1" source="sm-standby" target="sm-rwait" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="st3" value="Relay ON&#xa;+ 200ms delay&#xa;+ zero-cross sync" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=10;" parent="1" source="sm-rwait" target="sm-sstart" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="st4" value="Vref ramp complete&#xa;RegulationMode = ENABLED" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CCCCCC;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=10;" parent="1" source="sm-sstart" target="sm-normal" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="st5" value="CheckVacInputOK() == false&#xa;(loss of AC input)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#666666;fontColor=#FFFFFF;labelBackgroundColor=#333333;fontSize=10;curved=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="sm-normal" target="sm-standby" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="90" y="900" />
+              <mxPoint x="90" y="353" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="st6" value="SystemFaults != 0" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=10;strokeWidth=2;entryX=0;entryY=0.25;entryDx=0;entryDy=0;" parent="1" source="sm-standby" target="sm-off" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="325" />
+              <mxPoint x="600" y="870" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="st7" value="SystemFaults != 0" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=10;strokeWidth=2;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="sm-sstart" target="sm-off" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="550" y="700" />
+              <mxPoint x="550" y="900" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="st8" value="SystemFaults != 0" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#CC0000;fontColor=#FF6666;labelBackgroundColor=#1A1A1A;fontSize=10;strokeWidth=2;entryX=0;entryY=0.75;entryDx=0;entryDy=0;exitX=1;exitY=0.75;exitDx=0;exitDy=0;" parent="1" source="sm-normal" target="sm-off" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="620" y="930" />
+              <mxPoint x="620" y="930" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="sm-always" value="Runs EVERY 100µs (all states):&#xa;&#xa;• ZeroCrossCheck(vacAvg)&#xa;• CheckVacInputOK() — brown-in 600ms / brown-out 30ms&#xa;• CheckPFCVoltage() — PFC_OK / NOT_OK hysteresis&#xa;• RelayControl() — GPIO RC8 based on AC valid" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CCCCCC;fontSize=10;align=left;spacingLeft=10;fontColor=#FFFFFF;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="570" y="120" width="380" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="sm-faults" value="pfcFaultFlags (any bit → PCS_OFF):&#xa;&#xa;MainsVoltage | MainsFreq | DrvSupply&#xa;MainsUnderVoltage | MainsOverVoltage&#xa;OutputUnderVoltage | OutputOverVoltage&#xa;OverCurrent | DCDCFaultMode&#xa;Communication | LowLineOverPower&#xa;HW_OutputOverVoltage" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#CC0000;fontSize=10;align=left;spacingLeft=10;fontColor=#FFFFFF;strokeWidth=2;" parent="1" vertex="1">
+          <mxGeometry x="650" y="680" width="240" height="120" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
