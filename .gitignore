@@ -1,0 +1,54 @@
+### MPLAB X ###
+
+#client secure directory
+secure
+
+#Build Directories
+[Dd]ebug/
+[Bb]uild/
+[Dd]ist/
+[Dd]isassembly/
+**/nbproject/private/
+**/.generated_files/
+**/nbproject/Makefile-*
+**/nbproject/Package-default.bash
+
+#### NetBeans directories
+html/
+nbbuild/
+nbdist/
+nbactions.xml
+nb-configuration.xml
+funclist
+
+#### Build Results
+*.d
+*.pre
+*.p1
+*.lst
+*.sym
+*.obj
+*.o
+*.sdb
+*.obj.dmp
+*.map
+
+#### Backup Files
+*.c.bak
+*.h.bak
+*.bak
+
+#vscode
+.generated_files/
+build/
+dist/
+nbproject/
+Makefile*
+Package-*
+private/
+_build/
+!cmake/**/user.cmake
+cmake/**/.generated/*
+cmake/**/CMake*
+out/
+*.bak*
