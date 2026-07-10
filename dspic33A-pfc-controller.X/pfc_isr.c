@@ -2,7 +2,7 @@
 #include "pfc_app.h"
 #include "pfc_params.h"
 
-// ADC2 ISR: Master multiplier — computes current reference and writes DAC3
+// ADC2 ISR: Master multiplier - computes current reference and writes DAC3
 // Runs at switching frequency (up to 500 kHz). Budget: 400 cycles at 200 MHz.
 void __attribute__((__interrupt__, no_auto_psv)) _AD2CH0Interrupt(void)
 {

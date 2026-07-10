@@ -39,7 +39,7 @@
 #define SOFT_START_DUTY_INITIAL     100U        // Integer PWM counts (~2.5% at 100kHz)
 
 // === Frequency Selection ===
-// 12-bit ADC range (0–4095) divided into 20 positions
+// 12-bit ADC range (0-4095) divided into 20 positions
 // Band spacing = 4096/20 = 204.8 ~ 205 counts
 // Valid band: center +/- 75 counts (accommodates 1% R tolerance + ADC error)
 // Guard band: 55 counts between valid regions
