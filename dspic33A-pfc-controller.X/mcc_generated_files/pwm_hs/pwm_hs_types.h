@@ -32,7 +32,6 @@
 enum PWM_GENERATOR
 {
     PWM_GENERATOR_1 =  1,       /**< Custom name of PWM generator 1 */
-    PWM_GENERATOR_2 =  2,       /**< Custom name of PWM generator 2 */
     PWM_MAX_GENERATOR
 };
 
@@ -98,13 +97,13 @@ enum PWM_DAC_TRIGGER_COMPARE
 */
 enum PWM_MODES
 {
-    PWM_MODE_INDEPENDENT_EDGE =  0x0,       /**< Independent Edge mode*/
-    PWM_MODE_VARIABLE_PHASE =  0x1,       /**< Variable Phase mode*/
-    PWM_MODE_INDEPENDENT_EDGE_DUAL_OUTPUT =  0x2,       /**< Independent Edge, dual output mode*/
-    PWM_MODE_CENTER_ALIGNED =  0x4,       /**< Center-Aligned mode*/
-    PWM_MODE_DOUBLE_UPDATE_CENTER_ALIGNED =  0x5,       /**< Double-Update Center-Aligned mode*/
-    PWM_MODE_DUAL_EDGE_CENTER_ALIGNED_ONE_UPDATE_CYCLE =  0x6,       /**< Dual Edge Center-Aligned;one update/cycle mode*/
     PWM_MODE_DUAL_EDGE_CENTER_ALIGNED_TWO_UPDATES_CYCLE =  0x7,       /**< Dual Edge Center-Aligned;two updates/cycle mode*/
+    PWM_MODE_DUAL_EDGE_CENTER_ALIGNED_ONE_UPDATE_CYCLE =  0x6,       /**< Dual Edge Center-Aligned;one update/cycle mode*/
+    PWM_MODE_DOUBLE_UPDATE_CENTER_ALIGNED =  0x5,       /**< Double-Update Center-Aligned mode*/
+    PWM_MODE_CENTER_ALIGNED =  0x4,       /**< Center-Aligned mode*/
+    PWM_MODE_INDEPENDENT_EDGE_DUAL_OUTPUT =  0x2,       /**< Independent Edge, dual output mode*/
+    PWM_MODE_VARIABLE_PHASE =  0x1,       /**< Variable Phase mode*/
+    PWM_MODE_INDEPENDENT_EDGE =  0x0,       /**< Independent Edge mode*/
 };
 
 /**
@@ -114,9 +113,9 @@ enum PWM_MODES
 */
 enum PWM_HS_OUTPUT_MODES
 {
-    COMPLEMENTARY_OUTPUT_MODE = 0x0,         /**< Complementary output mode*/
-    INDEPENDENT_OUTPUT_MODE = 0x1,         /**< Independent output mode*/
     PUSH_PULL_OUTPUT_MODE = 0x2,         /**< Push-Pull output mode*/
+    INDEPENDENT_OUTPUT_MODE = 0x1,         /**< Independent output mode*/
+    COMPLEMENTARY_OUTPUT_MODE = 0x0,         /**< Complementary output mode*/
 };
 
 /**

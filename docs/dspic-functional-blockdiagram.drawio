@@ -370,7 +370,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="dsPIC Functional Block Diagram" id="TTazezMSGf-yASinZBpF">
-    <mxGraphModel dx="1434" dy="836" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
+    <mxGraphModel dx="574" dy="334" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2200" pageHeight="1400" math="0" shadow="0">
       <root>
         <mxCell id="xG4Lxz5vGgRE9JCWwKTY-0" />
         <mxCell id="xG4Lxz5vGgRE9JCWwKTY-1" parent="xG4Lxz5vGgRE9JCWwKTY-0" />
@@ -442,7 +442,7 @@
         <mxCell id="xG4Lxz5vGgRE9JCWwKTY-21" value="DAC3&lt;br&gt;(DACOUT1)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=9;" parent="xG4Lxz5vGgRE9JCWwKTY-1" vertex="1">
           <mxGeometry x="1080" y="880" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="6Hq7KQMDtwCq4GpELcWa-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="xG4Lxz5vGgRE9JCWwKTY-1" source="xG4Lxz5vGgRE9JCWwKTY-22" target="ERXI6H7VJ3-U-STfM57P-5">
+        <mxCell id="6Hq7KQMDtwCq4GpELcWa-52" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="xG4Lxz5vGgRE9JCWwKTY-1" source="xG4Lxz5vGgRE9JCWwKTY-22" target="6Hq7KQMDtwCq4GpELcWa-51">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="xG4Lxz5vGgRE9JCWwKTY-22" value="ADC4 Core&lt;div&gt;VAVG (VFF)&lt;br&gt;CH0 | AN2 | RB7&lt;br&gt;Trig: PWM1&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#4D4D4D;strokeColor=#4D4D4D;fontColor=#FFFFFF;fontSize=10;" parent="xG4Lxz5vGgRE9JCWwKTY-1" vertex="1">
@@ -701,6 +701,12 @@
         </mxCell>
         <mxCell id="6Hq7KQMDtwCq4GpELcWa-49" value="&lt;div&gt;External Vref&lt;/div&gt;&lt;div&gt;or internal vref&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1A1A1A;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=10;fontStyle=1;perimeterSpacing=2;" vertex="1" parent="xG4Lxz5vGgRE9JCWwKTY-1">
           <mxGeometry x="320" y="279.95" width="80" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="6Hq7KQMDtwCq4GpELcWa-53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="xG4Lxz5vGgRE9JCWwKTY-1" source="6Hq7KQMDtwCq4GpELcWa-51" target="ERXI6H7VJ3-U-STfM57P-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="6Hq7KQMDtwCq4GpELcWa-51" value="+1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#0050EF;strokeColor=#0050EF;fontColor=#FFFFFF;fontSize=10;" vertex="1" parent="xG4Lxz5vGgRE9JCWwKTY-1">
+          <mxGeometry x="750" y="680" width="40" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

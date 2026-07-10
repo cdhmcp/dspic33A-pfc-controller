@@ -99,22 +99,22 @@ void PWM_Initialize (void)
     PG1CLPCI1 = 0x0UL;
     // PSS 0x0; 
     PG1CLPCI2 = 0x0UL;
-    // MODSEL Independent Edge; CLKSEL Master clock; HREN disabled; TRGCNT 1; ON disabled; SOCS Self-trigger; TRGMOD PWM Generator operates in Single Trigger mode; UPDMOD Immediate; MSTEN disabled; MPHSEL disabled; MPERSEL disabled; MDCSEL disabled; 
-    PG1CON = 0x1000008UL;
+    // MODSEL Independent Edge; CLKSEL Master clock; HREN disabled; TRGCNT 1; ON disabled; SOCS Self-trigger; TRGMOD PWM Generator operates in Single Trigger mode; UPDMOD SOC; MSTEN disabled; MPHSEL disabled; MPERSEL disabled; MDCSEL disabled; 
+    PG1CON = 0x8UL;
     // DC 0; 
     PG1DC = 0x0UL;
     // DCA 0x0; 
     PG1DCA = 0x0UL;
     // DTL 0; DTH 0; 
     PG1DT = 0x0UL;
-    // ADTR1EN1 enabled; ADTR1EN2 disabled; ADTR1EN3 disabled; ADTR1PS 1:1; ADTR1OFS None; DACTREN1 disabled; DACTREN2 disabled; PGTRGSEL Trigger C compare event; UPDTRG Trigger A; PWMPCI PWM1; IEVTSEL EOC; SIEN disabled; FFIEN disabled; CLIEN disabled; FLT1IEN disabled; FLT2IEN disabled; 
-    PG1EVT1 = 0x1B0001UL;
+    // ADTR1EN1 enabled; ADTR1EN2 disabled; ADTR1EN3 disabled; ADTR1PS 1:1; ADTR1OFS None; DACTREN1 disabled; DACTREN2 disabled; PGTRGSEL Trigger A compare event; UPDTRG Duty Cycle; PWMPCI PWM1; IEVTSEL EOC; SIEN disabled; FFIEN disabled; CLIEN disabled; FLT1IEN disabled; FLT2IEN disabled; 
+    PG1EVT1 = 0x90001UL;
     // ADTR2EN1 disabled; ADTR2EN2 disabled; ADTR2EN3 disabled; ADTR2PS 1:1; ADTR2OFS None; CAPTRPS 1:1; CAPTROFS None; 
     PG1EVT2 = 0x0UL;
     // BPSEL PWM Generator 1; AQSS None; AQPS Not inverted; TERM Manual Terminate; TSYNCDIS PWM EOC; TQSS None; TQPS Not inverted; LATMOD disabled; SWPCIM PCI acceptance logic; SWPCI Drives '0'; ACP Level-sensitive; TERMPS disabled; PPS Not inverted; PSYNC disabled; SWTERM disabled; BPEN disabled; 
     PG1F1PCI1 = 0x0UL;
-    // PSS 0; 
-    PG1F1PCI2 = 0x0UL;
+    // PSS 1073741824; 
+    PG1F1PCI2 = 0x40000000UL;
     // BPSEL PWM Generator 1; AQSS None; AQPS Not inverted; TERM Manual Terminate; TSYNCDIS PWM EOC; TQSS None; TQPS Not inverted; LATMOD disabled; SWPCIM PCI acceptance logic; SWPCI Drives '0'; ACP Level-sensitive; TERMPS disabled; PPS Not inverted; PSYNC disabled; SWTERM disabled; BPEN disabled; 
     PG1F2PCI1 = 0x0UL;
     // PSS 0; 
@@ -143,72 +143,14 @@ void PWM_Initialize (void)
     PG1TRIGA = 0x0UL;
     // TRIGB 0; CAHALF disabled; 
     PG1TRIGB = 0x0UL;
-    // TRIGC 31992; CAHALF disabled; 
-    PG1TRIGC = 0x7CF8UL;
+    // TRIGC 0; CAHALF disabled; 
+    PG1TRIGC = 0x0UL;
     // TRIGD 0; CAHALF disabled; 
     PG1TRIGD = 0x0UL;
     // TRIGE 0; CAHALF disabled; 
     PG1TRIGE = 0x0UL;
     // TRIGF 0; CAHALF disabled; 
     PG1TRIGF = 0x0UL;
-    // 
-    PG2CAP = 0x0UL;
-    // BPSEL PWM Generator 1; AQSS None; AQPS Not inverted; TERM Manual Terminate; TSYNCDIS PWM EOC; TQSS None; TQPS Not inverted; LATMOD disabled; SWPCIM PCI acceptance logic; SWPCI Drives '0'; ACP Level-sensitive; TERMPS disabled; PPS Not inverted; PSYNC disabled; SWTERM disabled; BPEN disabled; 
-    PG2CLPCI1 = 0x0UL;
-    // PSS 0x0; 
-    PG2CLPCI2 = 0x0UL;
-    // MODSEL Independent Edge; CLKSEL Master clock; HREN disabled; TRGCNT 1; ON disabled; SOCS Trigger output selected by PG1; TRGMOD PWM Generator operates in Single Trigger mode; UPDMOD Immediate; MSTEN disabled; MPHSEL disabled; MPERSEL disabled; MDCSEL disabled; 
-    PG2CON = 0x1010008UL;
-    // DC 0; 
-    PG2DC = 0x0UL;
-    // DCA 0x0; 
-    PG2DCA = 0x0UL;
-    // DTL 0; DTH 0; 
-    PG2DT = 0x0UL;
-    // ADTR1EN1 enabled; ADTR1EN2 disabled; ADTR1EN3 disabled; ADTR1PS 1:1; ADTR1OFS None; DACTREN1 disabled; DACTREN2 disabled; PGTRGSEL EOC event; UPDTRG Trigger A; PWMPCI PWM1; IEVTSEL EOC; SIEN disabled; FFIEN disabled; CLIEN disabled; FLT1IEN disabled; FLT2IEN disabled; 
-    PG2EVT1 = 0x180001UL;
-    // ADTR2EN1 disabled; ADTR2EN2 disabled; ADTR2EN3 disabled; ADTR2PS 1:1; ADTR2OFS None; CAPTRPS 1:1; CAPTROFS None; 
-    PG2EVT2 = 0x0UL;
-    // BPSEL PWM Generator 1; AQSS None; AQPS Not inverted; TERM Manual Terminate; TSYNCDIS PWM EOC; TQSS None; TQPS Not inverted; LATMOD disabled; SWPCIM PCI acceptance logic; SWPCI Drives '0'; ACP Level-sensitive; TERMPS disabled; PPS Not inverted; PSYNC disabled; SWTERM disabled; BPEN disabled; 
-    PG2F1PCI1 = 0x0UL;
-    // PSS 0; 
-    PG2F1PCI2 = 0x0UL;
-    // BPSEL PWM Generator 1; AQSS None; AQPS Not inverted; TERM Manual Terminate; TSYNCDIS PWM EOC; TQSS None; TQPS Not inverted; LATMOD disabled; SWPCIM PCI acceptance logic; SWPCI Drives '0'; ACP Level-sensitive; TERMPS disabled; PPS Not inverted; PSYNC disabled; SWTERM disabled; BPEN disabled; 
-    PG2F2PCI1 = 0x0UL;
-    // PSS 0; 
-    PG2F2PCI2 = 0x0UL;
-    // BPSEL PWM Generator 1; AQSS None; AQPS Not inverted; TERM Manual Terminate; TSYNCDIS PWM EOC; TQSS None; TQPS Not inverted; LATMOD disabled; SWPCIM PCI acceptance logic; SWPCI Drives '0'; ACP Level-sensitive; TERMPS disabled; PPS Not inverted; PSYNC disabled; SWTERM disabled; BPEN disabled; 
-    PG2FFPCI1 = 0x0UL;
-    // PSS 0x0; 
-    PG2FFPCI2 = 0x0UL;
-    // POLL Active-high; POLH Active-high; PENL disabled; PENH disabled; PMOD Independent; DTCMPSEL PCI Sync Logic; PPSEN disabled; FORCEON disabled; SWAP disabled; CAPTRSEL disabled; CAPTREN disabled; CAPSRC Software; CAPEN disabled; 
-    PG2IOCON1 = 0x10UL;
-    // DBDAT 0x0; FFDAT 0x0; CLDAT 0x0; FLT1DAT 0; FLT2DAT 0x0; OSYNC User output overrides occur when specified by UPDMOD bits; OVRDAT 0; OVRENL disabled; OVRENH disabled; CLMOD disabled; 
-    PG2IOCON2 = 0x800UL;
-    // LEB disabled; PLF disabled; PLR disabled; PHF disabled; PHR disabled; TRGA disabled; TRGB disabled; TRGC disabled; TRGD disabled; 
-    PG2LEB = 0x0UL;
-    // PER 63984; 
-    PG2PER = 0xF9F0UL;
-    // PHASE 0; 
-    PG2PHASE = 0x0UL;
-    // BPSEL PWM Generator 1; AQSS None; AQPS Not inverted; TERM Manual Terminate; TSYNCDIS PWM EOC; TQSS None; TQPS Not inverted; LATMOD disabled; SWPCIM PCI acceptance logic; SWPCI Drives '0'; ACP Level-sensitive; TERMPS disabled; PPS Not inverted; PSYNC disabled; SWTERM disabled; BPEN disabled; 
-    PG2SPCI1 = 0x0UL;
-    // PSS 0x0; 
-    PG2SPCI2 = 0x0UL;
-    // UPDREQ disabled; UPDATE disabled; CAP disabled; TRCLR disabled; TRSET disabled; FFEVT disabled; CLEVT disabled; FLT1EVT disabled; FLT2EVT disabled; SEVT disabled; 
-    PG2STAT = 0x0UL;
-    // TRIGA 0; CAHALF disabled; 
-    PG2TRIGA = 0x0UL;
-    // TRIGB 0; CAHALF disabled; 
-    PG2TRIGB = 0x0UL;
-    // TRIGC 0; CAHALF disabled; 
-    PG2TRIGC = 0x0UL;
-    // TRIGD 0; CAHALF disabled; 
-    PG2TRIGD = 0x0UL;
-    // TRIGE 0; CAHALF disabled; 
-    PG2TRIGE = 0x0UL;
-    // TRIGF 0; CAHALF disabled; 
-    PG2TRIGF = 0x0UL;
     // CTA1EN disabled; CTA2EN disabled; CTA3EN disabled; CTA4EN disabled; CTA5EN disabled; CTA6EN disabled; CTA7EN disabled; CTA8EN disabled; CTB1EN disabled; CTB2EN disabled; CTB3EN disabled; CTB4EN disabled; CTB5EN disabled; CTB6EN disabled; CTB7EN disabled; CTB8EN disabled; 
     CMBTRIG = 0x0UL;
     // FSCL 0x0; 
@@ -291,35 +233,6 @@ void PWM_Deinitialize (void)
     PG1TRIGD = 0x0UL;
     PG1TRIGE = 0x0UL;
     PG1TRIGF = 0xFFFF0UL;
-    PG2CAP = 0x0UL;
-    PG2CLPCI1 = 0x0UL;
-    PG2CLPCI2 = 0x0UL;
-    PG2CON = 0x0UL;
-    PG2DC = 0x0UL;
-    PG2DCA = 0x0UL;
-    PG2DT = 0x0UL;
-    PG2EVT1 = 0x0UL;
-    PG2EVT2 = 0x0UL;
-    PG2F1PCI1 = 0x0UL;
-    PG2F1PCI2 = 0x0UL;
-    PG2F2PCI1 = 0x0UL;
-    PG2F2PCI2 = 0x0UL;
-    PG2FFPCI1 = 0x0UL;
-    PG2FFPCI2 = 0x0UL;
-    PG2IOCON1 = 0x0UL;
-    PG2IOCON2 = 0x0UL;
-    PG2LEB = 0x0UL;
-    PG2PER = 0x0UL;
-    PG2PHASE = 0x0UL;
-    PG2SPCI1 = 0x0UL;
-    PG2SPCI2 = 0x0UL;
-    PG2STAT = 0x0UL;
-    PG2TRIGA = 0x0UL;
-    PG2TRIGB = 0x0UL;
-    PG2TRIGC = 0x0UL;
-    PG2TRIGD = 0x0UL;
-    PG2TRIGE = 0x0UL;
-    PG2TRIGF = 0xFFFF0UL;
     CMBTRIG = 0x0UL;
     FSCL = 0x0UL;
     FSMINPER = 0x0UL;
@@ -381,16 +294,6 @@ void PWM_GeneratorTasks (enum PWM_GENERATOR intGen)
                     (*PWM_GeneratorEOCEventHandler)(intGen);
                 }
                 IFS1bits.PWM1IF = 0;
-            }
-            break;
-        case PWM_GENERATOR_2:
-            if(IFS1bits.PWM2IF == 1)
-            {
-                if(NULL != PWM_GeneratorEOCEventHandler)
-                {
-                    (*PWM_GeneratorEOCEventHandler)(intGen);
-                }
-                IFS1bits.PWM2IF = 0;
             }
             break;
         default:
