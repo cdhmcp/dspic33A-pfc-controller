@@ -1,5 +1,5 @@
 /*
-© [2026] Microchip Technology Inc. and its subsidiaries.
+ï¿½ [2026] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -19,15 +19,15 @@
     THIS SOFTWARE.
 */
 #include "mcc_generated_files/system/system.h"
-/*
-    Main application
-*/
+#include "pfc_app.h"
 
 int main(void)
 {
     SYSTEM_Initialize();
+    PFC_App_Init();
 
-    while(1)
+    while (1)
     {
-    }    
+        PFC_App_Background();
+    }
 }
