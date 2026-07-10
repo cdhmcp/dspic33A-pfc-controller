@@ -29,6 +29,13 @@ Implement application firmware for dsPIC33AK512MPS506 PFC controller mimicking T
 INIT → STANDBY → RELAY_WAIT → SOFT_START → RUNNING → FAULT (cooldown → STANDBY)
 ```
 
+### ADC bit width clarification
+- MCC comments say "ACCNUM 4 samples, 13 bits result" but this is misleading
+- MODE=0b00 = "Single sample initiated by TRG1SRC trigger" — only one conversion per trigger
+- ACCNUM field is only used when MODE selects multi-sample/accumulation modes
+- ADC produces 12-bit results (0–4095) — no MCC changes needed
+- Updated all code to use 12-bit math (ADC_SHIFT=12, ADC_MAX=4095, freq band scaling for 4096 range)
+
 ### Next steps
 - Compile clean build
 - Add source files to MPLAB X project if not auto-detected

@@ -11,7 +11,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD2CH0Interrupt(void)
 
     if (g_pfc_running)
     {
-        uint32_t temp = __builtin_muluu(iac_raw, verr_raw) >> 13;
+        uint32_t temp = __builtin_muluu(iac_raw, verr_raw) >> ADC_SHIFT;
         uint32_t current_ref = __builtin_muluu((uint16_t)temp, g_inv_vavg_sq) >> 15;
 
         if (current_ref > DAC_MAX_VALUE)
@@ -37,7 +37,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD3CH0Interrupt(void)
 
     if (g_pfc_running)
     {
-        uint32_t duty = __builtin_muluu(comp_out, g_pg1per_cached) >> 13;
+        uint32_t duty = __builtin_muluu(comp_out, g_pg1per_cached) >> ADC_SHIFT;
 
         uint32_t duty_min = (uint32_t)g_duty_min_int << 4;
         uint32_t duty_max = (uint32_t)g_duty_max_int << 4;
@@ -68,7 +68,7 @@ void TMR1_TimeoutCallback(void)
     }
     AD4SWTRGbits.CH0TRG = 1U;
 
-    uint32_t vavg_sq = __builtin_muluu(g_vavg_raw, g_vavg_raw) >> 13;
+    uint32_t vavg_sq = __builtin_muluu(g_vavg_raw, g_vavg_raw) >> ADC_SHIFT;
     if (vavg_sq < VAVG_SQ_MIN)
     {
         vavg_sq = VAVG_SQ_MIN;

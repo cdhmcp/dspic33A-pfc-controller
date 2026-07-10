@@ -8,7 +8,9 @@
 #define PWM_CLK                     400000000UL
 
 // === ADC / DAC Scaling ===
-#define ADC_13BIT_MAX               8191U
+#define ADC_BITS                    12U
+#define ADC_MAX                     4095U
+#define ADC_SHIFT                   12U         // For normalizing multiply products
 #define DAC_MAX_VALUE               4095U
 
 // === Multiplier Scaling (Q15) ===
@@ -37,10 +39,14 @@
 #define SOFT_START_DUTY_INITIAL     100U        // Integer PWM counts (~2.5% at 100kHz)
 
 // === Frequency Selection ===
+// 12-bit ADC range (0–4095) divided into 20 positions
+// Band spacing = 4096/20 = 204.8 ~ 205 counts
+// Valid band: center +/- 75 counts (accommodates 1% R tolerance + ADC error)
+// Guard band: 55 counts between valid regions
 #define FREQ_SELECT_POSITIONS       20U
-#define FREQ_BAND_HALF_WIDTH        150U
-#define FREQ_BAND_SPACING           410U
-#define FREQ_BAND_OFFSET            205U
+#define FREQ_BAND_HALF_WIDTH        75U
+#define FREQ_BAND_SPACING           205U
+#define FREQ_BAND_OFFSET            102U
 #define FREQ_BASE_KHZ               25U
 #define FREQ_STEP_KHZ               25U
 
