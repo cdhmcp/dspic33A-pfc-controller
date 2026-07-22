@@ -1,14 +1,17 @@
 /**
- * MAIN Generated Driver Header File
+ * UREF Generated Driver Header File
  * 
- * @file      system.c
- *            
- * @ingroup   systemdriver
- *            
- * @brief     This is the generated driver header file for the System driver
- *            
+ * @file      uref.h
+ * 
+ * @defgroup  urefdriver UREF Driver
+ * 
+ * @brief     This is the generated driver header file for the UREF driver
+ *
+ * @skipline @version   PLIB Version 1.0.0
+ *
  * @skipline  Device : dsPIC33AK512MPS506
 */
+
 /*
 © [2026] Microchip Technology Inc. and its subsidiaries.
 
@@ -30,45 +33,63 @@
     THIS SOFTWARE.
 */
 
-#include "../system.h"
-#include "../system_types.h"
-#include "../clock.h"
-#include "../pins.h"
-#include "../../adc/adc1.h"
-#include "../../adc/adc2.h"
-#include "../../adc/adc3.h"
-#include "../../adc/adc4.h"
-#include "../../cmp/cmp3.h"
-#include "../dmt.h"
-#include "../../opa/opa1.h"
-#include "../../opa/opa2.h"
-#include "../../opa/opa3.h"
-#include "../../pwm_hs/pwm.h"
-#include "../../timer/tmr1.h"
-#include "../../uref/uref.h"
-#include "../interrupt.h"
+#ifndef UREF_H
+#define UREF_H
 
+// Section: Included Files
 
-void SYSTEM_Initialize(void)
+#include <xc.h>
+#include <stdint.h>
+// Section: Data Type Definitions
+
+// Section: Interface Routines
+
+/**
+ * @ingroup  urefdriver
+ * @brief    Initializes the UREF module
+ * @param    none
+ * @return   none  
+ */
+void UREF_Initialize(void);
+
+/**
+ * @ingroup  urefdriver
+ * @brief    Deinitializes the UREF to POR values
+ * @param    none
+ * @return   none  
+ */
+void UREF_Deinitialize(void);
+
+/**
+ * @ingroup  urefdriver
+ * @brief    This inline function enables UREF module
+ * @pre      The UREF_Initialize function should be called.
+ * @param    none
+ * @return   none  
+ */
+inline static void UREF_Enable( void )
 {
-    CLOCK_Initialize();
-    PINS_Initialize();
-    ADC1_Initialize();
-    ADC2_Initialize();
-    ADC3_Initialize();
-    ADC4_Initialize();
-    CMP3_Initialize();
-    DMT_Initialize();
-    OPA1_Initialize();
-    OPA2_Initialize();
-    OPA3_Initialize();
-    PWM_Initialize();
-    TMR1_Initialize();
-    UREF_Initialize();
-    INTERRUPT_GlobalEnable();
-    INTERRUPT_Initialize();
+    UREFCONbits.ON = 1U; //Enable uref;
 }
+
+/**
+ * @ingroup  urefdriver
+ * @brief    This inline function disables UREF module
+ * @param    none
+ * @return   none  
+ */
+inline static void UREF_Disable( void )
+{
+    UREFCONbits.ON = 0U; //Disable uref;
+}
+
+
+#endif //UREF_H
 
 /**
  End of File
 */
+
+
+
+

@@ -1,13 +1,13 @@
 /**
- * OPA2 Generated Driver Source File
+ * UREF Generated Driver Source File
  * 
- * @file      opa2.c
+ * @file      uref.c
  * 
- * @ingroup   opadriver
+ * @ingroup   urefdriver
  * 
- * @brief     This is the generated driver source file for OPA2 driver
+ * @brief     This is the generated driver source file for UREF driver
  *
- * @skipline @version   PLIB Version 1.2.2
+ * @skipline @version   PLIB Version 1.0.0
  *
  * @skipline  Device : dsPIC33AK512MPS506
 */
@@ -36,49 +36,22 @@
 // Section: Included Files
 
 #include <stdlib.h>
-#include "../opa2.h"
+#include "../uref.h"
 
 // Section: File specific functions
-// Section: File specific data type definitions
-
-/**
- * @ingroup  opadriver
- * @brief    Defines an object for OPA_INTERFACE.
- *           For hardware dependent APIs, make sure the API is not NULL 
- *           before calling it.
- * 
- * @b Example:
- * @code
- *        customerName.OPA2_UnityGainEnable();
- * @endcode
- */
-const struct OPA_INTERFACE OPA2 = {
-    .Intitialize        	  = &OPA2_Initialize,
-    .Deintitialize      	  = &OPA2_Deinitialize,
-    .Enable            	      = &OPA2_Enable,
-    .Disable            	  = &OPA2_Disable,
-    .UnityGainEnable          = &OPA2_UnityGainEnable,
-    .HighPowerModeEnable      = &OPA2_HighPowerModeEnable,
-    .OutputMonitorEnable      = NULL,
-    .DifferentialInputModeSet = &OPA2_DifferentialInputModeSet,
-    .OffsetCorrection         = &OPA2_OffsetCorrection,
-};
 // Section: Driver Interface Function Definitions
 
-void OPA2_Initialize (void)
+void UREF_Initialize (void)
 {
-    OPA2_HighPowerModeEnable(true);
-    OPA2_UnityGainEnable(true);
-    OPA2_DifferentialInputModeSet(OPA_DIFFERENTIAL_INPUT_NMOS_PMOS_PAIR);
-    OPA2_Enable();
+    // OUTSEL None; INSEL AVDD/2; ON enabled; 
+    UREFCON = 0x8100UL;
 }
 
-void OPA2_Deinitialize (void)
+void UREF_Deinitialize (void)
 {
-    OPA2_Disable();
+    UREF_Disable();
     
-    AMP2CON1 = 0x0;
-    AMP2CON2 = 0x0;
+    UREFCON = 0x0UL;
 }
 
 /**

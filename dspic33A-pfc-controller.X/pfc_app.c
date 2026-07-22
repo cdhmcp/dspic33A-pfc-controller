@@ -16,12 +16,13 @@ volatile pfc_state_t      g_pfc_state  = PFC_STATE_INIT;
 volatile pfc_fault_code_t g_fault_code = PFC_FAULT_NONE;
 
 // === Local State ===
-static uint16_t state_counter   = 0U;
-static uint16_t brown_in_count  = 0U;
-static uint16_t brown_out_count = 0U;
-static uint16_t ov_count        = 0U;
-static uint16_t soft_start_step = 0U;
-static uint16_t duty_max_target = 0U;
+static uint16_t state_counter     = 0U;
+static uint16_t brown_in_count    = 0U;
+static uint16_t brown_out_count   = 0U;
+static uint16_t ov_count          = 0U;
+static uint16_t soft_start_step   = 0U;
+static uint16_t duty_max_target   = 0U;
+static uint16_t heartbeat_counter = 0U;
 
 // === Forward Declarations ===
 static int8_t PFC_FreqSelect_Read(void);
@@ -30,6 +31,12 @@ static void   PFC_EnterFault(pfc_fault_code_t code);
 // === Frequency Selection ===
 static int8_t PFC_FreqSelect_Read(void)
 {
+    // If switch SW0 is held at startup, override to debug frequency
+    if (SW0_RC3_GetValue() == 0U)
+    {
+        return (int8_t)FREQ_DEBUG_INDEX;
+    }
+
     AD4SWTRGbits.CH1TRG = 1U;
     while (!AD4STATbits.CH1RDY) { }
     uint16_t adc_val = (uint16_t)AD4CH1DATA;
@@ -123,6 +130,14 @@ static void PFC_EnterFault(pfc_fault_code_t code)
 // === State Machine (called from Timer1 ISR every 100us) ===
 void PFC_StateMachine_Tick(void)
 {
+    // Heartbeat LED
+    heartbeat_counter++;
+    if (heartbeat_counter >= HEARTBEAT_PERIOD_TICKS)
+    {
+        heartbeat_counter = 0U;
+        LED_RD0_Toggle();
+    }
+
     switch (g_pfc_state)
     {
         case PFC_STATE_INIT:

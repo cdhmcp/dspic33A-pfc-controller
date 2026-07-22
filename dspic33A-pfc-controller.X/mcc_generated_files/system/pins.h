@@ -43,6 +43,57 @@
 // Section: Device Pin Macros
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RC3 GPIO Pin which has a custom name of SW0_RC3 to High
+ * @pre      The RC3 must be set as Output Pin             
+ * @param    none
+ * @return   none  
+ */
+#define SW0_RC3_SetHigh()          (_LATC3 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RC3 GPIO Pin which has a custom name of SW0_RC3 to Low
+ * @pre      The RC3 must be set as Output Pin
+ * @param    none
+ * @return   none  
+ */
+#define SW0_RC3_SetLow()           (_LATC3 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RC3 GPIO Pin which has a custom name of SW0_RC3
+ * @pre      The RC3 must be set as Output Pin
+ * @param    none
+ * @return   none  
+ */
+#define SW0_RC3_Toggle()           (_LATC3 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RC3 GPIO Pin which has a custom name of SW0_RC3
+ * @param    none
+ * @return   none  
+ */
+#define SW0_RC3_GetValue()         _RC3
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RC3 GPIO Pin which has a custom name of SW0_RC3 as Input
+ * @param    none
+ * @return   none  
+ */
+#define SW0_RC3_SetDigitalInput()  (_TRISC3 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RC3 GPIO Pin which has a custom name of SW0_RC3 as Output
+ * @param    none
+ * @return   none  
+ */
+#define SW0_RC3_SetDigitalOutput() (_TRISC3 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Sets the RC8 GPIO Pin which has a custom name of LED_RC8 to High
  * @pre      The RC8 must be set as Output Pin             
  * @param    none
@@ -94,12 +145,79 @@
 
 /**
  * @ingroup  pinsdriver
+ * @brief    Sets the RD0 GPIO Pin which has a custom name of LED_RD0 to High
+ * @pre      The RD0 must be set as Output Pin             
+ * @param    none
+ * @return   none  
+ */
+#define LED_RD0_SetHigh()          (_LATD0 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Sets the RD0 GPIO Pin which has a custom name of LED_RD0 to Low
+ * @pre      The RD0 must be set as Output Pin
+ * @param    none
+ * @return   none  
+ */
+#define LED_RD0_SetLow()           (_LATD0 = 0)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Toggles the RD0 GPIO Pin which has a custom name of LED_RD0
+ * @pre      The RD0 must be set as Output Pin
+ * @param    none
+ * @return   none  
+ */
+#define LED_RD0_Toggle()           (_LATD0 ^= 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Reads the value of the RD0 GPIO Pin which has a custom name of LED_RD0
+ * @param    none
+ * @return   none  
+ */
+#define LED_RD0_GetValue()         _RD0
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RD0 GPIO Pin which has a custom name of LED_RD0 as Input
+ * @param    none
+ * @return   none  
+ */
+#define LED_RD0_SetDigitalInput()  (_TRISD0 = 1)
+
+/**
+ * @ingroup  pinsdriver
+ * @brief    Configures the RD0 GPIO Pin which has a custom name of LED_RD0 as Output
+ * @param    none
+ * @return   none  
+ */
+#define LED_RD0_SetDigitalOutput() (_TRISD0 = 0)
+
+/**
+ * @ingroup  pinsdriver
  * @brief    Initializes the PINS module
  * @param    none
  * @return   none  
  */
 void PINS_Initialize(void);
 
+/**
+ * @ingroup  pinsdriver
+ * @brief    This function is callback for SW0_RC3 Pin
+ * @param    none
+ * @return   none   
+ */
+void SW0_RC3_CallBack(void);
+
+
+/**
+ * @ingroup    pinsdriver
+ * @brief      This function assigns a function pointer with a callback address
+ * @param[in]  InterruptHandler - Address of the callback function 
+ * @return     none  
+ */
+void SW0_RC3_SetInterruptHandler(void (* InterruptHandler)(void));
 
 
 #endif

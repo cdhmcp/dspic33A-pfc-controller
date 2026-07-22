@@ -48,6 +48,10 @@ void INTERRUPT_Initialize(void)
     // Priority: 5
     IPC25bits.AD3CH0IP = 5;
     
+    // CNC: Change notice C interrupt
+    // Priority: 1
+    IPC15bits.CNCIP = 1;
+    
     // T1: Timer 1 interrupt
     // Priority: 1
     IPC6bits.T1IP = 1;
@@ -59,5 +63,6 @@ void INTERRUPT_Deinitialize(void)
     //POR default value of priority
     IPC22bits.AD2CH0IP = 4;
     IPC25bits.AD3CH0IP = 4;
+    IPC15bits.CNCIP = 4;
     IPC6bits.T1IP = 4;
 }

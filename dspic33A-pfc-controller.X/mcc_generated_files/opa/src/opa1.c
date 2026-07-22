@@ -68,6 +68,7 @@ const struct OPA_INTERFACE OPA1 = {
 void OPA1_Initialize (void)
 {
     OPA1_HighPowerModeEnable(true);
+    AMP1CON1bits.REFEN = 1;
     OPA1_DifferentialInputModeSet(OPA_DIFFERENTIAL_INPUT_NMOS_PMOS_PAIR);
     OPA1_Enable();
 }

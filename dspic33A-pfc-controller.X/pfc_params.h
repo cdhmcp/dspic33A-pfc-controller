@@ -49,6 +49,10 @@
 #define FREQ_BAND_OFFSET            102U
 #define FREQ_BASE_KHZ               25U
 #define FREQ_STEP_KHZ               25U
+#define FREQ_DEBUG_INDEX            3U          // Debug override frequency (index into table, 3 = 100kHz)
+
+// === Heartbeat LED ===
+#define HEARTBEAT_PERIOD_TICKS      5000U       // Toggle every 500ms (5000 x 100us)
 
 // PWM period lookup table (integer counts at 400 MHz, before << 4 shift)
 // PG1PER = (400_000_000 / freq_hz - 1) for each frequency step

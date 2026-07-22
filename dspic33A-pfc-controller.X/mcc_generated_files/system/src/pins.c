@@ -39,6 +39,7 @@
 #include "../pins.h"
 
 // Section: File specific functions
+static void (*SW0_RC3_InterruptHandler)(void) = NULL;
 
 // Section: Driver Interface Function Definitions
 void PINS_Initialize(void)
@@ -57,7 +58,7 @@ void PINS_Initialize(void)
     TRISA = 0x0FFDUL;
     TRISB = 0x0FFEUL;
     TRISC = 0x0EFFUL;
-    TRISD = 0x01FBUL;
+    TRISD = 0x01FAUL;
 
 
     /****************************************************************************
@@ -65,7 +66,7 @@ void PINS_Initialize(void)
      ***************************************************************************/
     CNPUA = 0x0000UL;
     CNPUB = 0x0000UL;
-    CNPUC = 0x0000UL;
+    CNPUC = 0x0008UL;
     CNPUD = 0x0000UL;
     CNPDA = 0x0000UL;
     CNPDB = 0x0000UL;
@@ -87,6 +88,66 @@ void PINS_Initialize(void)
      ***************************************************************************/
     ANSELA = 0x0FFFUL;
     ANSELB = 0x0FFFUL;
+    /*******************************************************************************
+    * Interrupt On Change: negative
+    *******************************************************************************/
+    CNEN1Cbits.CNEN1C3 = 1; //Pin : RC3; 
 
+    /****************************************************************************
+     * Interrupt On Change: flag
+     ***************************************************************************/
+    CNFCbits.CNFC3 = 0;    //Pin : SW0_RC3
+
+    /****************************************************************************
+     * Interrupt On Change: config
+     ***************************************************************************/
+    CNCONCbits.CNSTYLE = 1; //Config for PORTC
+    CNCONCbits.ON = 1; //Config for PORTC
+
+    /* Initialize IOC Interrupt Handler*/
+    SW0_RC3_SetInterruptHandler(&SW0_RC3_CallBack);
+
+    /****************************************************************************
+     * Interrupt On Change: Interrupt Enable
+     ***************************************************************************/
+    IFS3bits.CNCIF = 0; //Clear CNCI interrupt flag
+    IEC3bits.CNCIE = 1; //Enable CNCI interrupt
+}
+
+void __attribute__ ((weak)) SW0_RC3_CallBack(void)
+{
+
+}
+
+void SW0_RC3_SetInterruptHandler(void (* InterruptHandler)(void))
+{ 
+    IEC3bits.CNCIE = 0; //Disable CNCI interrupt
+    SW0_RC3_InterruptHandler = InterruptHandler; 
+    IEC3bits.CNCIE = 1; //Enable CNCI interrupt
+}
+
+/* Interrupt service function for the CNCI interrupt. */
+/* cppcheck-suppress misra-c2012-8.4
+*
+* (Rule 8.4) REQUIRED: A compatible declaration shall be visible when an object or 
+* function with external linkage is defined
+*
+* Reasoning: Interrupt declaration are provided by compiler and are available
+* outside the driver folder
+*/
+void __attribute__ ( ( interrupt ) ) _CNCInterrupt (void)
+{
+    if(CNFCbits.CNFC3 == 1)
+    {
+        if(SW0_RC3_InterruptHandler != NULL) 
+        { 
+            SW0_RC3_InterruptHandler(); 
+        }
+        
+        CNFCbits.CNFC3 = 0;  //Clear flag for Pin - SW0_RC3
+    }
+    
+    // Clear the flag
+    IFS3bits.CNCIF = 0;
 }
 
