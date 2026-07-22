@@ -131,10 +131,10 @@ void ADC4_Initialize(void)
     AD4CMPSTAT = 0x0UL;
     //CH0TRG disabled; CH1TRG disabled; CH2TRG disabled; CH3TRG disabled; CH4TRG disabled; CH5TRG disabled; CH6TRG disabled; CH7TRG disabled; 
     AD4SWTRG = 0x0UL;
-    //TRG1SRC Triggers are disabled; MODE Single sample initiated by TRG1SRC[4:0] trigger; TRG2SRC Triggers are disabled; ACCNUM 4 samples, 13 bits result; SAMC 6.5 TAD; IRQSEL enabled; EIEN disabled; TRG1POL disabled; PINSEL AD4AN2; NINSEL disabled; FRAC Integer; DIFF disabled; 
-    AD4CH0CON1 = 0x2230000UL;
-    //TRG1SRC Triggers are disabled; MODE Single sample initiated by TRG1SRC[4:0] trigger; TRG2SRC Triggers are disabled; ACCNUM 4 samples, 13 bits result; SAMC 6.5 TAD; IRQSEL enabled; EIEN disabled; TRG1POL disabled; PINSEL AD4AN4; NINSEL disabled; FRAC Integer; DIFF disabled; 
-    AD4CH1CON1 = 0x4230000UL;
+    //TRG1SRC Software trigger initiated by using ADnSWTRG register; MODE Single sample initiated by TRG1SRC[4:0] trigger; TRG2SRC Triggers are disabled; ACCNUM 4 samples, 13 bits result; SAMC 6.5 TAD; IRQSEL enabled; EIEN disabled; TRG1POL disabled; PINSEL AD4AN2; NINSEL disabled; FRAC Integer; DIFF disabled; 
+    AD4CH0CON1 = 0x2230001UL;
+    //TRG1SRC Software trigger initiated by using ADnSWTRG register; MODE Single sample initiated by TRG1SRC[4:0] trigger; TRG2SRC Triggers are disabled; ACCNUM 4 samples, 13 bits result; SAMC 6.5 TAD; IRQSEL enabled; EIEN disabled; TRG1POL disabled; PINSEL AD4AN4; NINSEL disabled; FRAC Integer; DIFF disabled; 
+    AD4CH1CON1 = 0x4230001UL;
     //ADCMPCNT disabled; CMPMOD NONE; CMPCNTMOD disabled; CMPVAL enabled; ACCBRST disabled; ACCRO disabled; 
     AD4CH0CON2 = 0x20000000UL;
     //ADCMPCNT disabled; CMPMOD NONE; CMPCNTMOD disabled; CMPVAL enabled; ACCBRST disabled; ACCRO disabled; 
