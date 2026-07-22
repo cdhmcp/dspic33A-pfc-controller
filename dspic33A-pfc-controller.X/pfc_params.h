@@ -3,6 +3,11 @@
 
 #include <stdint.h>
 
+// === Debug Mode ===
+// Set to 1 to bypass state machine and test multiplier output on DAC3
+// PWM timebase runs (triggers ADCs) but output is forced low
+#define PFC_DEBUG_MODE              1U
+
 // === System Clocks ===
 #define FCY                         200000000UL
 #define PWM_CLK                     400000000UL

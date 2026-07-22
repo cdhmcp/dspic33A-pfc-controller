@@ -135,6 +135,37 @@ User flagged references to "13-bit ADC" — they don't want oversampling and bel
 - All `>> 13` shifts → `>> ADC_SHIFT` (defined as 12)
 - Frequency selection bands recalculated for 4096 range (spacing 205, offset 102, half-width 75)
 
+### 2026-07-22: STANDBY Stuck - ADC4 CH0 Trigger Issue + Debug Mode
+
+**Symptom:** Program stuck in PFC_STATE_STANDBY. g_vavg_raw never updates from zero, so brown-in threshold is never met.
+
+**Root cause:** Same as ADC4 CH1 issue. AD4CH0CON1 = 0x2230000 has TRG1SRC[5:0] = 0 (disabled). Timer1 writes `AD4SWTRGbits.CH0TRG = 1` every 100us, but with TRG1SRC=0 and MODE=0b00 ("Single sample initiated by TRG1SRC trigger"), the software trigger bit doesn't initiate a conversion.
+
+**Fix:** Added `AD4CH0CON1bits.TRG1SRC = 1U` in PFC_App_Init(). Note: in production this will change to PWM trigger, but for now software trigger from Timer1 is sufficient for VAVG sampling at 10kHz.
+
+**Debug mode design:**
+- Problem: even with ADC4 working, state machine needs 600ms STANDBY + 50ms RELAY + 200ms SOFT_START before multiplier activates. Impractical for bench testing.
+- Solution: `PFC_DEBUG_MODE = 1` bypasses state machine entirely.
+- Sets g_pfc_running=1 immediately so ADC2 ISR writes DAC3.
+- Starts PWM timebase (PG1CON.ON=1) so ADC1/2/3 get triggered by PWM Trigger A.
+- PWM output forced low via OVRENH=1, OVRDAT=0 — safe, no gate drive signal.
+- Timer1 still runs: heartbeat blinks, VAVG reads, inv_vavg_sq computes.
+- Initial g_inv_vavg_sq set to 32767 (unity) so multiplier output is visible immediately before Timer1 overwrites with live value.
+
+**Testing plan (staged):**
+- Test A: heartbeat blinks + g_vavg_raw non-zero = Timer1 + ADC4 working
+- Test B: breakpoint in _AD2CH0Interrupt = PWM triggering ADC2
+- Test C: scope DAC3 (RA1) while feeding rectified sine on RB2
+
+**Math scaling observation:**
+At mid-scale (IAC=2048, Verr=2048, VAVG=2048):
+- vavg_sq = (2048*2048)>>12 = 1024
+- inv_vavg_sq = 32767/(1024+1) = 31
+- temp = (2048*2048)>>12 = 1024
+- current_ref = (1024*31)>>15 = 0
+
+This is very small due to double-division by VAVG^2. With inv_vavg_sq=32767 (debug unity), result would be (1024*32767)>>15 = 1024. So in debug mode with feedforward bypassed initially, output should track linearly. Once Timer1 overwrites inv_vavg_sq with live value, the feedforward will squash the gain — expected PFC behavior at nominal input voltage.
+
 ### Observations / Things to Revisit
 - DAC3 resolution: initialized with DACDAT=205. Need to verify if this is 12-bit (0–4095) or 9-bit. The `DAC3DAT = 0xCD00CD` register packs both DACDAT and DACLOW fields. Code currently clamps to 4095 (12-bit assumption).
 - OV detection logic: currently checks `AD1CH0DATA > VOUT_OV_THRESHOLD`. This assumes OPA1 output rises when Vout rises (non-inverting on the error side). Need to verify polarity during bring-up — if OPA1 is inverting (error amp), low output = high Vout, and the comparison should be `< threshold`.

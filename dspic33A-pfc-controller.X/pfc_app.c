@@ -65,6 +65,14 @@ void PFC_App_Init(void)
 
     CMP3_Calibrate();
 
+    // Enable software trigger source for ADC4 channels
+    // MCC leaves TRG1SRC=0 (disabled); set to 1 (common software trigger)
+    AD4CH0CON1bits.TRG1SRC = 1U;    // VAVG on RB7 (triggered from Timer1)
+    AD4CH1CON1bits.TRG1SRC = 1U;    // Freq select on RB10 (one-shot at startup)
+
+#if PFC_DEBUG_MODE
+    int8_t freq_index = (int8_t)FREQ_DEBUG_INDEX;
+#else
     int8_t freq_index = PFC_FreqSelect_Read();
 
     if (freq_index < 0)
@@ -73,6 +81,7 @@ void PFC_App_Init(void)
         g_fault_code = PFC_FAULT_FREQ_SELECT;
         return;
     }
+#endif
 
     uint16_t period_int = pg1per_table[freq_index];
     uint32_t period_reg = (uint32_t)period_int << 4;
@@ -106,9 +115,21 @@ void PFC_App_Init(void)
     // Prime ADC4 CH0 pipeline
     AD4SWTRGbits.CH0TRG = 1U;
 
+#if PFC_DEBUG_MODE
+    // Debug mode: bypass state machine, enable multiplier immediately
+    // PWM timebase runs to trigger ADC1/2/3, but output is forced low
+    g_pfc_running = 1U;
+    g_pfc_state = PFC_STATE_RUNNING;
+    g_inv_vavg_sq = VAVG_SQ_NUMERATOR;  // Unity gain until Timer1 computes live value
+    PG1IOCON2bits.OVRDAT = 0U;
+    PG1IOCON2bits.OVRENH = 1U;          // Force PWM output low
+    PG1STATbits.UPDREQ = 1U;            // Latch buffered PER/TRIGA/DC into active registers
+    PG1CONbits.ON = 1U;                 // Start PWM timebase (triggers ADCs)
+#else
     g_pfc_state = PFC_STATE_STANDBY;
     state_counter = 0U;
     brown_in_count = 0U;
+#endif
 }
 
 // === Fault Entry ===
@@ -130,13 +151,15 @@ static void PFC_EnterFault(pfc_fault_code_t code)
 // === State Machine (called from Timer1 ISR every 100us) ===
 void PFC_StateMachine_Tick(void)
 {
-    // Heartbeat LED
+#if !PFC_DEBUG_MODE
+    // Heartbeat LED (disabled in debug mode - RD0 used for ISR toggle diagnostic)
     heartbeat_counter++;
     if (heartbeat_counter >= HEARTBEAT_PERIOD_TICKS)
     {
         heartbeat_counter = 0U;
         LED_RD0_Toggle();
     }
+#endif
 
     switch (g_pfc_state)
     {

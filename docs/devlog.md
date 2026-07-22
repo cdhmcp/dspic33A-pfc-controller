@@ -36,6 +36,23 @@ INIT → STANDBY → RELAY_WAIT → SOFT_START → RUNNING → FAULT (cooldown �
 - ADC produces 12-bit results (0–4095) — no MCC changes needed
 - Updated all code to use 12-bit math (ADC_SHIFT=12, ADC_MAX=4095, freq band scaling for 4096 range)
 
+## 2026-07-22 - Debug mode and ADC4 trigger fix
+
+### Issues found
+- ADC4 CH0 (VAVG) has same trigger issue as CH1: TRG1SRC=0 means software trigger doesn't work
+- State machine blocks DAC3 testing (needs 850ms of valid VAVG before multiplier runs)
+
+### Changes
+- Added `AD4CH0CON1bits.TRG1SRC = 1U` in PFC_App_Init() (alongside existing CH1 fix)
+- Added `PFC_DEBUG_MODE` define in pfc_params.h (set to 1 for bench testing)
+- Debug mode bypasses state machine: sets g_pfc_running=1, starts PWM timebase with output forced low, enables ADC triggering immediately
+
+### Test procedure (debug mode)
+1. Verify heartbeat LED (RD0) blinks - Timer1 running
+2. Watch g_vavg_raw in debugger - ADC4 CH0 working
+3. Scope DAC3 output (RA1) - should track RB2 input shape
+4. All with PWM output safely held low
+
 ### Next steps
 - Compile clean build
 - Add source files to MPLAB X project if not auto-detected

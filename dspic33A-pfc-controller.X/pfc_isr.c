@@ -1,11 +1,13 @@
 #include <xc.h>
 #include "pfc_app.h"
 #include "pfc_params.h"
+#include "mcc_generated_files/system/pins.h"
 
 // ADC2 ISR: Master multiplier - computes current reference and writes DAC3
 // Runs at switching frequency (up to 500 kHz). Budget: 400 cycles at 200 MHz.
 void __attribute__((__interrupt__, no_auto_psv)) _AD2CH0Interrupt(void)
 {
+    LED_RD0_Toggle();
     uint16_t iac_raw  = (uint16_t)AD2CH0DATA;
     uint16_t verr_raw = (uint16_t)AD1CH0DATA;
 
@@ -68,12 +70,14 @@ void TMR1_TimeoutCallback(void)
     }
     AD4SWTRGbits.CH0TRG = 1U;
 
+#if !PFC_DEBUG_MODE
     uint32_t vavg_sq = __builtin_muluu(g_vavg_raw, g_vavg_raw) >> ADC_SHIFT;
     if (vavg_sq < VAVG_SQ_MIN)
     {
         vavg_sq = VAVG_SQ_MIN;
     }
     g_inv_vavg_sq = (uint16_t)(VAVG_SQ_NUMERATOR / (vavg_sq + 1U));
+#endif
 
     PFC_StateMachine_Tick();
 }
