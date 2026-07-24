@@ -57,6 +57,9 @@
 #define FREQ_STEP_KHZ               25U
 #define FREQ_DEBUG_INDEX            3U          // Debug override frequency (index into table, 3 = 100kHz)
 
+// === Feedforward Update Rate ===
+#define VAVG_UPDATE_DECIMATION      10U         // Compute 1/VAVG^2 every N Timer1 ticks (10 = 1kHz)
+
 // === Heartbeat LED ===
 #define HEARTBEAT_PERIOD_TICKS      5000U       // Toggle every 500ms (5000 x 100us)
 

@@ -43,8 +43,8 @@
 
 void UREF_Initialize (void)
 {
-    // OUTSEL None; INSEL AVDD/2; ON enabled; 
-    UREFCON = 0x8100UL;
+    // OUTSEL None; INSEL DAC3; ON enabled; 
+    UREFCON = 0x8800UL;
 }
 
 void UREF_Deinitialize (void)

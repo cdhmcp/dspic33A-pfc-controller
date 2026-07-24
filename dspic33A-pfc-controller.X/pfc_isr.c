@@ -3,32 +3,34 @@
 #include "pfc_params.h"
 #include "mcc_generated_files/system/pins.h"
 
+static uint16_t vavg_update_count = 0U;
+
 // ADC2 ISR: Master multiplier - computes current reference and writes DAC3
 // Runs at switching frequency (up to 500 kHz). Budget: 400 cycles at 200 MHz.
 void __attribute__((__interrupt__, no_auto_psv)) _AD2CH0Interrupt(void)
 {
-    LED_RD0_Toggle();
     uint16_t iac_raw  = (uint16_t)AD2CH0DATA;
     uint16_t verr_raw = (uint16_t)AD1CH0DATA;
     
-    if (iac_raw < 25){
-        Nop();
-    }
     if (g_pfc_running)
     {
         uint32_t temp = __builtin_muluu(iac_raw, verr_raw) >> ADC_SHIFT;
         uint32_t current_ref = __builtin_muluu((uint16_t)temp, g_inv_vavg_sq) >> 15;
 
-        if (current_ref < DAC_MIN_VALUE)
-            current_ref = DAC_MIN_VALUE;
-        else if (current_ref > DAC_MAX_VALUE)
+        //per datasheet DAC data is only guaranteed proportional from 0xCD and 0xF32 (about 5%-95% of VDD)
+        if (current_ref > DAC_MAX_VALUE)
             current_ref = DAC_MAX_VALUE;
+        //clamping to min value won't allow the current reference to go to zero (or near zero)
+//        else if (current_ref < DAC_MIN_VALUE)
+//            current_ref = DAC_MIN_VALUE;
 
-        DAC3DATbits.DACDAT = 0x0CDU;  // TEST: fixed value to verify DAC output = ~165mV
+
+        DAC3DATbits.DACDAT = (uint16_t) current_ref;
     }
     else
     {
-        DAC3DATbits.DACDAT = DAC_MIN_VALUE;
+        DAC3DATbits.DACDAT = 0;
+        //should we turn off DAC here?
     }
 
     IFS5bits.AD2CH0IF = 0U;
@@ -74,18 +76,26 @@ void TMR1_TimeoutCallback(void)
     }
 
     // Trigger all software-triggered ADCs together
+    //AD2 has the ISR where all ADC values are read.  So we trigger that last
+    //Maybe need to add NOP()'s before AD2 trigger if it seems AD1 or AD4 values\\
+      are not ready by the time ADC2 ISR hits
     AD1SWTRGbits.CH0TRG = 1U;
     AD4SWTRGbits.CH0TRG = 1U;
     AD2SWTRGbits.CH0TRG = 1U;
     
 
 #if !PFC_DEBUG_MODE
-    uint32_t vavg_sq = __builtin_muluu(g_vavg_raw, g_vavg_raw) >> ADC_SHIFT;
-    if (vavg_sq < VAVG_SQ_MIN)
+    vavg_update_count++;
+    if (vavg_update_count >= VAVG_UPDATE_DECIMATION)
     {
-        vavg_sq = VAVG_SQ_MIN;
+        vavg_update_count = 0U;
+        uint32_t vavg_sq = __builtin_muluu(g_vavg_raw, g_vavg_raw) >> ADC_SHIFT;
+        if (vavg_sq < VAVG_SQ_MIN)
+        {
+            vavg_sq = VAVG_SQ_MIN;
+        }
+        g_inv_vavg_sq = (uint16_t)(VAVG_SQ_NUMERATOR / (vavg_sq + 1U));
     }
-    g_inv_vavg_sq = (uint16_t)(VAVG_SQ_NUMERATOR / (vavg_sq + 1U));
 #endif
 
     PFC_StateMachine_Tick();

@@ -103,6 +103,11 @@ void PFC_App_Init(void)
     {
         soft_start_step = 1U;
     }
+    
+    //rev A1 silicon has an errata where you cannot use the DACOUT function (DAC on a pin).
+    //So we are routing the DAC output through UREF as a workaround for the nano dev board.
+    //A2 silicon does not have this issue.
+    UREFCONbits.OUTSEL = 1U;
 
     // Adjust interrupt priorities: ADC2 > ADC3 > Timer1
     IPC22bits.AD2CH0IP = 6U;
@@ -148,15 +153,15 @@ static void PFC_EnterFault(pfc_fault_code_t code)
 // === State Machine (called from Timer1 ISR every 100us) ===
 void PFC_StateMachine_Tick(void)
 {
-#if !PFC_DEBUG_MODE
-    // Heartbeat LED (disabled in debug mode - RD0 used for ISR toggle diagnostic)
+
+    // Heartbeat LED 
     heartbeat_counter++;
     if (heartbeat_counter >= HEARTBEAT_PERIOD_TICKS)
     {
         heartbeat_counter = 0U;
         LED_RD0_Toggle();
     }
-#endif
+
 
     switch (g_pfc_state)
     {
