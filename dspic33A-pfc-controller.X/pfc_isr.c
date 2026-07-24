@@ -45,7 +45,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD3CH0Interrupt(void)
 
     if (g_pfc_running)
     {
-        uint32_t duty = __builtin_muluu(comp_out, g_pg1per_cached) >> ADC_SHIFT;
+        uint32_t duty = (__builtin_muluu(comp_out, g_pg1per_cached) >> ADC_SHIFT) << 4;
 
         uint32_t duty_min = (uint32_t)g_duty_min_int << 4;
         uint32_t duty_max = (uint32_t)g_duty_max_int << 4;

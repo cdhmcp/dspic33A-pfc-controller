@@ -9,7 +9,8 @@ typedef enum {
     PFC_STATE_RELAY_WAIT,
     PFC_STATE_SOFT_START,
     PFC_STATE_RUNNING,
-    PFC_STATE_FAULT
+    PFC_STATE_FAULT,
+    PFC_STATE_DEBUG
 } pfc_state_t;
 
 typedef enum {

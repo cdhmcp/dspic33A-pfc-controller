@@ -4,6 +4,7 @@
 #include "mcc_generated_files/system/pins.h"
 #include "mcc_generated_files/cmp/cmp3.h"
 #include "mcc_generated_files/opa/opa1.h"
+#include "mcc_generated_files/opa/opa3.h"
 
 // === Shared Variables ===
 volatile uint16_t g_inv_vavg_sq   = 0U;
@@ -119,11 +120,14 @@ void PFC_App_Init(void)
     // Debug mode: bypass state machine, enable multiplier immediately
     // PWM timebase runs to trigger ADC1/2/3, but output is forced low
     OPA1_Disable();
+    OPA3_UnityGainEnable(true);
     g_pfc_running = 1U;
-    g_pfc_state = PFC_STATE_RUNNING;
+    g_pfc_state = PFC_STATE_DEBUG;
     g_inv_vavg_sq = VAVG_SQ_NUMERATOR;  // Unity gain until Timer1 computes live value
+    g_duty_max_int = duty_max_target;
+    PG1F1PCI2 = 0x0UL;
     PG1IOCON2bits.OVRDAT = 0U;
-    PG1IOCON2bits.OVRENH = 1U;          // Force PWM output low
+    PG1IOCON2bits.OVRENH = 0U;          // Allow PWM output (test duty from ADC3 input)
     PG1STATbits.UPDREQ = 1U;            // Latch buffered PER/TRIGA/DC into active registers
     PG1CONbits.ON = 1U;                 // Start PWM timebase (triggers ADCs)
 #else
@@ -261,6 +265,9 @@ void PFC_StateMachine_Tick(void)
                 brown_in_count = 0U;
                 state_counter = 0U;
             }
+            break;
+
+        case PFC_STATE_DEBUG:
             break;
 
         default:

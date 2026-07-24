@@ -23,10 +23,10 @@
 #define VAVG_SQ_NUMERATOR           32767U
 #define VAVG_SQ_MIN                 256U
 
-// === Voltage Thresholds (13-bit ADC counts, tune to actual divider ratios) ===
-#define VAVG_BROWN_IN_THRESHOLD     1500U
-#define VAVG_BROWN_OUT_THRESHOLD    1200U
-#define VOUT_OV_THRESHOLD           7500U
+// === Voltage Thresholds (12-bit ADC counts, tune to actual divider ratios) ===
+#define VAVG_BROWN_IN_THRESHOLD     750U
+#define VAVG_BROWN_OUT_THRESHOLD    600U
+#define VOUT_OV_THRESHOLD           3750U
 
 // === Timing (40us ticks @ 25kHz Timer1) ===
 #define BROWN_IN_TIME_TICKS         15000U      // 600ms
