@@ -3,6 +3,7 @@
 #include "pfc_params.h"
 #include "mcc_generated_files/system/pins.h"
 #include "mcc_generated_files/cmp/cmp3.h"
+#include "mcc_generated_files/opa/opa1.h"
 
 // === Shared Variables ===
 volatile uint16_t g_inv_vavg_sq   = 0U;
@@ -65,11 +66,6 @@ void PFC_App_Init(void)
 
     CMP3_Calibrate();
 
-    // Enable software trigger source for ADC4 channels
-    // MCC leaves TRG1SRC=0 (disabled); set to 1 (common software trigger)
-    AD4CH0CON1bits.TRG1SRC = 1U;    // VAVG on RB7 (triggered from Timer1)
-    AD4CH1CON1bits.TRG1SRC = 1U;    // Freq select on RB10 (one-shot at startup)
-
 #if PFC_DEBUG_MODE
     int8_t freq_index = (int8_t)FREQ_DEBUG_INDEX;
 #else
@@ -118,6 +114,7 @@ void PFC_App_Init(void)
 #if PFC_DEBUG_MODE
     // Debug mode: bypass state machine, enable multiplier immediately
     // PWM timebase runs to trigger ADC1/2/3, but output is forced low
+    OPA1_Disable();
     g_pfc_running = 1U;
     g_pfc_state = PFC_STATE_RUNNING;
     g_inv_vavg_sq = VAVG_SQ_NUMERATOR;  // Unity gain until Timer1 computes live value

@@ -16,7 +16,8 @@
 #define ADC_BITS                    12U
 #define ADC_MAX                     4095U
 #define ADC_SHIFT                   12U         // For normalizing multiply products
-#define DAC_MAX_VALUE               4095U
+#define DAC_MIN_VALUE               0x0CDU      // 205 - DAC output floor (5% of VDD)
+#define DAC_MAX_VALUE               0xF32U      // 3890 - DAC output ceiling (95% of VDD)
 
 // === Multiplier Scaling (Q15) ===
 #define VAVG_SQ_NUMERATOR           32767U

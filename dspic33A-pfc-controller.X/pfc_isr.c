@@ -10,22 +10,25 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD2CH0Interrupt(void)
     LED_RD0_Toggle();
     uint16_t iac_raw  = (uint16_t)AD2CH0DATA;
     uint16_t verr_raw = (uint16_t)AD1CH0DATA;
-
+    
+    if (iac_raw < 25){
+        Nop();
+    }
     if (g_pfc_running)
     {
         uint32_t temp = __builtin_muluu(iac_raw, verr_raw) >> ADC_SHIFT;
         uint32_t current_ref = __builtin_muluu((uint16_t)temp, g_inv_vavg_sq) >> 15;
 
-        if (current_ref > DAC_MAX_VALUE)
-        {
+        if (current_ref < DAC_MIN_VALUE)
+            current_ref = DAC_MIN_VALUE;
+        else if (current_ref > DAC_MAX_VALUE)
             current_ref = DAC_MAX_VALUE;
-        }
 
-        DAC3DATbits.DACDAT = (uint16_t)current_ref;
+        DAC3DATbits.DACDAT = 0x0CDU;  // TEST: fixed value to verify DAC output = ~165mV
     }
     else
     {
-        DAC3DATbits.DACDAT = 0U;
+        DAC3DATbits.DACDAT = DAC_MIN_VALUE;
     }
 
     IFS5bits.AD2CH0IF = 0U;
@@ -64,11 +67,17 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD3CH0Interrupt(void)
 // The MCC ISR (_T1Interrupt) calls this and clears the interrupt flag.
 void TMR1_TimeoutCallback(void)
 {
+    // Read ADC4 result from previous cycle before triggering new conversions
     if (AD4STATbits.CH0RDY)
     {
         g_vavg_raw = (uint16_t)AD4CH0DATA;
     }
+
+    // Trigger all software-triggered ADCs together
+    AD1SWTRGbits.CH0TRG = 1U;
     AD4SWTRGbits.CH0TRG = 1U;
+    AD2SWTRGbits.CH0TRG = 1U;
+    
 
 #if !PFC_DEBUG_MODE
     uint32_t vavg_sq = __builtin_muluu(g_vavg_raw, g_vavg_raw) >> ADC_SHIFT;
