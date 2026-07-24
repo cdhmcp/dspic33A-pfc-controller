@@ -28,13 +28,13 @@
 #define VAVG_BROWN_OUT_THRESHOLD    1200U
 #define VOUT_OV_THRESHOLD           7500U
 
-// === Timing (100us ticks) ===
-#define BROWN_IN_TIME_TICKS         6000U       // 600ms
-#define BROWN_OUT_TIME_TICKS        300U        // 30ms
-#define RELAY_SETTLE_TICKS          500U        // 50ms
-#define SOFT_START_TICKS            2000U       // 200ms
-#define OV_DEBOUNCE_TICKS           10U         // 1ms
-#define FAULT_COOLDOWN_TICKS        50000U      // 5s
+// === Timing (40us ticks @ 25kHz Timer1) ===
+#define BROWN_IN_TIME_TICKS         15000U      // 600ms
+#define BROWN_OUT_TIME_TICKS        750U        // 30ms
+#define RELAY_SETTLE_TICKS          1250U       // 50ms
+#define SOFT_START_TICKS            5000U       // 200ms
+#define OV_DEBOUNCE_TICKS           25U         // 1ms
+#define FAULT_COOLDOWN_TICKS        125000UL    // 5s
 
 // === Duty Cycle Limits ===
 #define DUTY_MAX_PERCENT            95U
@@ -58,10 +58,10 @@
 #define FREQ_DEBUG_INDEX            3U          // Debug override frequency (index into table, 3 = 100kHz)
 
 // === Feedforward Update Rate ===
-#define VAVG_UPDATE_DECIMATION      10U         // Compute 1/VAVG^2 every N Timer1 ticks (10 = 1kHz)
+#define VAVG_UPDATE_DECIMATION      25U         // Compute 1/VAVG^2 every N Timer1 ticks (25 = 1kHz at 25kHz Timer1)
 
 // === Heartbeat LED ===
-#define HEARTBEAT_PERIOD_TICKS      5000U       // Toggle every 500ms (5000 x 100us)
+#define HEARTBEAT_PERIOD_TICKS      12500U      // Toggle every 500ms (12500 x 40us)
 
 // PWM period lookup table (integer counts at 400 MHz, before << 4 shift)
 // PG1PER = (400_000_000 / freq_hz - 1) for each frequency step

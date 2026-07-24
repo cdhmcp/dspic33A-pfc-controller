@@ -17,7 +17,7 @@ volatile pfc_state_t      g_pfc_state  = PFC_STATE_INIT;
 volatile pfc_fault_code_t g_fault_code = PFC_FAULT_NONE;
 
 // === Local State ===
-static uint16_t state_counter     = 0U;
+static uint32_t state_counter     = 0U;
 static uint16_t brown_in_count    = 0U;
 static uint16_t brown_out_count   = 0U;
 static uint16_t ov_count          = 0U;
@@ -61,7 +61,6 @@ static int8_t PFC_FreqSelect_Read(void)
 void PFC_App_Init(void)
 {
     PG1CONbits.ON = 0U;
-    LED_RC8_SetLow();
     g_pfc_running = 0U;
 
     CMP3_Calibrate();
@@ -141,7 +140,6 @@ static void PFC_EnterFault(pfc_fault_code_t code)
     PG1CONbits.ON = 0U;
     PG1IOCON2bits.OVRDAT = 0U;
     PG1IOCON2bits.OVRENH = 1U;
-    LED_RC8_SetLow();
 
     PG1F1PCI1bits.SWTERM = 1U;
 
@@ -150,7 +148,7 @@ static void PFC_EnterFault(pfc_fault_code_t code)
     state_counter = 0U;
 }
 
-// === State Machine (called from Timer1 ISR every 100us) ===
+// === State Machine (called from Timer1 ISR every 40us) ===
 void PFC_StateMachine_Tick(void)
 {
 
@@ -176,7 +174,6 @@ void PFC_StateMachine_Tick(void)
                 {
                     g_pfc_state = PFC_STATE_RELAY_WAIT;
                     state_counter = 0U;
-                    LED_RC8_SetHigh();
                 }
             }
             else

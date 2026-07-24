@@ -34,6 +34,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD2CH0Interrupt(void)
     }
 
     IFS5bits.AD2CH0IF = 0U;
+    LED_RC8_SetLow();
 }
 
 // ADC3 ISR: Current compensator output to PWM duty cycle
@@ -64,11 +65,12 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD3CH0Interrupt(void)
     IFS6bits.AD3CH0IF = 0U;
 }
 
-// Timer1 callback: 100us scheduler
+// Timer1 callback: 40us scheduler (25kHz)
 // Overrides the weak TMR1_TimeoutCallback defined in MCC tmr1.c.
 // The MCC ISR (_T1Interrupt) calls this and clears the interrupt flag.
 void TMR1_TimeoutCallback(void)
 {
+    LED_RC8_SetHigh();
     // Read ADC4 result from previous cycle before triggering new conversions
     if (AD4STATbits.CH0RDY)
     {
