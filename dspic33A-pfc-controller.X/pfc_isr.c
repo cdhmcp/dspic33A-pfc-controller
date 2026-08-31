@@ -60,6 +60,7 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD3CH0Interrupt(void)
         }
 
         PG1DC = duty & 0x000FFFF0UL;
+        PG2DC = duty & 0x000FFFF0UL;    // PG2 timing output mirrors PG1 duty
     }
 
     IFS6bits.AD3CH0IF = 0U;

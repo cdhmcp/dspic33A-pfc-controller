@@ -29,6 +29,30 @@ static uint16_t heartbeat_counter = 0U;
 // === Forward Declarations ===
 static int8_t PFC_FreqSelect_Read(void);
 static void   PFC_EnterFault(pfc_fault_code_t code);
+static void   PFC_PwmStart(void);
+static void   PFC_PwmStop(void);
+
+// === PWM Start/Stop ===
+// PG2 (RA0/PWM2H) is a timing output that mirrors PG1's period and duty and is
+// started by PG1's EOC trigger (PG2CON SOCS = PG1 trigger output). PG2 runs in
+// Single Trigger mode, so once triggered it free-runs until its TRIG latch is
+// cleared - it must be re-armed on every restart or its phase relationship to
+// PG1 is lost.
+static void PFC_PwmStart(void)
+{
+    PG2STATbits.TRCLR = 1U;             // Release latched single-shot trigger
+    PG2DC = PG1DC;
+    PG2STATbits.UPDREQ = 1U;            // Latch buffered PG2 PER/DC
+    PG2CONbits.ON = 1U;                 // Arm PG2 before PG1 starts counting
+    PG1STATbits.UPDREQ = 1U;            // Latch buffered PER/TRIGA/DC into active registers
+    PG1CONbits.ON = 1U;                 // Start PWM timebase (triggers ADCs)
+}
+
+static void PFC_PwmStop(void)
+{
+    PG1CONbits.ON = 0U;
+    PG2CONbits.ON = 0U;
+}
 
 // === Frequency Selection ===
 static int8_t PFC_FreqSelect_Read(void)
@@ -61,7 +85,7 @@ static int8_t PFC_FreqSelect_Read(void)
 // === Initialization ===
 void PFC_App_Init(void)
 {
-    PG1CONbits.ON = 0U;
+    PFC_PwmStop();
     g_pfc_running = 0U;
 
     CMP3_Calibrate();
@@ -82,6 +106,7 @@ void PFC_App_Init(void)
     uint16_t period_int = pg1per_table[freq_index];
     uint32_t period_reg = (uint32_t)period_int << 4;
     PG1PER = period_reg & 0x000FFFF0UL;
+    PG2PER = period_reg & 0x000FFFF0UL;  // PG2 mirrors PG1 timebase
     g_pg1per_cached = period_int;
 
     // ADC trigger at ~50% of period for mid-inductor-current sampling
@@ -128,8 +153,7 @@ void PFC_App_Init(void)
     PG1F1PCI2 = 0x0UL;
     PG1IOCON2bits.OVRDAT = 0U;
     PG1IOCON2bits.OVRENH = 0U;          // Allow PWM output (test duty from ADC3 input)
-    PG1STATbits.UPDREQ = 1U;            // Latch buffered PER/TRIGA/DC into active registers
-    PG1CONbits.ON = 1U;                 // Start PWM timebase (triggers ADCs)
+    PFC_PwmStart();
 #else
     g_pfc_state = PFC_STATE_STANDBY;
     state_counter = 0U;
@@ -141,7 +165,7 @@ void PFC_App_Init(void)
 static void PFC_EnterFault(pfc_fault_code_t code)
 {
     g_pfc_running = 0U;
-    PG1CONbits.ON = 0U;
+    PFC_PwmStop();
     PG1IOCON2bits.OVRDAT = 0U;
     PG1IOCON2bits.OVRENH = 1U;
 
@@ -195,7 +219,7 @@ void PFC_StateMachine_Tick(void)
                 g_duty_max_int = SOFT_START_DUTY_INITIAL;
                 PG1IOCON2bits.OVRDAT = 0U;
                 PG1IOCON2bits.OVRENH = 0U;
-                PG1CONbits.ON = 1U;
+                PFC_PwmStart();
                 g_pfc_running = 1U;
             }
             break;
