@@ -5,7 +5,7 @@
 
 // === Debug Mode ===
 // Set to 1 to bypass state machine and test multiplier output on DAC3 and PWM output
-#define PFC_DEBUG_MODE              1U
+#define PFC_DEBUG_MODE              0U
 
 // === System Clocks ===
 #define FCY                         200000000UL
@@ -55,6 +55,27 @@
 #define FREQ_BASE_KHZ               25U
 #define FREQ_STEP_KHZ               25U
 #define FREQ_DEBUG_INDEX            3U          // Debug override frequency (index into table, 3 = 100kHz)
+
+// === Dead-Time Selection ===
+// Two resistor dividers select dead time independently: ADC4 CH2 sets PWM1,
+// ADC4 CH3 sets PWM5. 10 positions in 10ns steps, read once at startup.
+// Band 0 (lowest voltage) = 100ns down to band 9 (highest) = 10ns, so a divider
+// that fails low or shorts gives the largest (safest) dead time.
+// 12-bit ADC range (0-4095) divided into 10 positions
+// Band spacing = 4096/10 = 409.6 ~ 410 counts
+// Valid band: center +/- 150 counts, leaving a 110 count guard band between
+#define DT_SELECT_POSITIONS         10U
+#define DT_BAND_HALF_WIDTH          150U
+#define DT_BAND_SPACING             410U
+#define DT_BAND_OFFSET              205U
+
+// PGxDT DTH/DTL are in the same fine-edge format as PER/DC: the low 4 bits are
+// the high-resolution fraction and read as 0 while HREN = 0. At a 400 MHz PWM
+// clock that is 16 counts per 2.5ns tick = 64 counts per 10ns step, so every
+// step in the range is an exact whole number of PWM clocks (no rounding error).
+#define DT_COUNTS_PER_STEP          64U     // 10ns in PGxDT register units
+#define DT_COUNTS_DEFAULT           640U    // 100ns - used in debug mode and on
+                                            // an out-of-band divider reading
 
 // === Feedforward Update Rate ===
 #define VAVG_UPDATE_DECIMATION      25U         // Compute 1/VAVG^2 every N Timer1 ticks (25 = 1kHz at 25kHz Timer1)

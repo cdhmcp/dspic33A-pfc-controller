@@ -135,26 +135,50 @@ void ADC4_Initialize(void)
     AD4CH0CON1 = 0x2230001UL;
     //TRG1SRC Software trigger initiated by using ADnSWTRG register; MODE Single sample initiated by TRG1SRC[4:0] trigger; TRG2SRC Triggers are disabled; ACCNUM 4 samples, 13 bits result; SAMC 6.5 TAD; IRQSEL enabled; EIEN disabled; TRG1POL disabled; PINSEL AD4AN4; NINSEL disabled; FRAC Integer; DIFF disabled; 
     AD4CH1CON1 = 0x4230001UL;
+    //TRG1SRC Software trigger initiated by using ADnSWTRG register; MODE Single sample initiated by TRG1SRC[4:0] trigger; TRG2SRC Triggers are disabled; ACCNUM 4 samples, 13 bits result; SAMC 6.5 TAD; IRQSEL enabled; EIEN disabled; TRG1POL disabled; PINSEL AD4AN0; NINSEL disabled; FRAC Integer; DIFF disabled; 
+    AD4CH2CON1 = 0x230001UL;
+    //TRG1SRC Software trigger initiated by using ADnSWTRG register; MODE Single sample initiated by TRG1SRC[4:0] trigger; TRG2SRC Triggers are disabled; ACCNUM 4 samples, 13 bits result; SAMC 6.5 TAD; IRQSEL enabled; EIEN disabled; TRG1POL disabled; PINSEL AD4AN1; NINSEL disabled; FRAC Integer; DIFF disabled; 
+    AD4CH3CON1 = 0x1230001UL;
     //ADCMPCNT disabled; CMPMOD NONE; CMPCNTMOD disabled; CMPVAL enabled; ACCBRST disabled; ACCRO disabled; 
     AD4CH0CON2 = 0x20000000UL;
     //ADCMPCNT disabled; CMPMOD NONE; CMPCNTMOD disabled; CMPVAL enabled; ACCBRST disabled; ACCRO disabled; 
     AD4CH1CON2 = 0x20000000UL;
+    //ADCMPCNT disabled; CMPMOD NONE; CMPCNTMOD disabled; CMPVAL enabled; ACCBRST disabled; ACCRO disabled; 
+    AD4CH2CON2 = 0x20000000UL;
+    //ADCMPCNT disabled; CMPMOD NONE; CMPCNTMOD disabled; CMPVAL enabled; ACCBRST disabled; ACCRO disabled; 
+    AD4CH3CON2 = 0x20000000UL;
     //
     AD4CH0RES = 0x0UL;
     //
     AD4CH1RES = 0x0UL;
+    //
+    AD4CH2RES = 0x0UL;
+    //
+    AD4CH3RES = 0x0UL;
     //CNT 0x0; 
     AD4CH0CNT = 0x0UL;
     //CNT 0x0; 
     AD4CH1CNT = 0x0UL;
+    //CNT 0x0; 
+    AD4CH2CNT = 0x0UL;
+    //CNT 0x0; 
+    AD4CH3CNT = 0x0UL;
     //CMPLO 0x0; 
     AD4CH0CMPLO = 0x0UL;
     //CMPLO 0x0; 
     AD4CH1CMPLO = 0x0UL;
+    //CMPLO 0x0; 
+    AD4CH2CMPLO = 0x0UL;
+    //CMPLO 0x0; 
+    AD4CH3CMPLO = 0x0UL;
     //CMPHI 0x0; 
     AD4CH0CMPHI = 0x0UL;
     //CMPHI 0x0; 
     AD4CH1CMPHI = 0x0UL;
+    //CMPHI 0x0; 
+    AD4CH2CMPHI = 0x0UL;
+    //CMPHI 0x0; 
+    AD4CH3CMPHI = 0x0UL;
 
     ADC4_ChannelCallbackRegister(&ADC4_ChannelCallback);
     ADC4_Result32BitChannelCallbackRegister(&ADC4_Result32BitChannelCallback);
@@ -177,16 +201,28 @@ void ADC4_Deinitialize (void)
     AD4SWTRG = 0x0UL;
     AD4CH0CON1 = 0x0UL;
     AD4CH1CON1 = 0x0UL;
+    AD4CH2CON1 = 0x0UL;
+    AD4CH3CON1 = 0x0UL;
     AD4CH0CON2 = 0x1UL;
     AD4CH1CON2 = 0x1UL;
+    AD4CH2CON2 = 0x1UL;
+    AD4CH3CON2 = 0x1UL;
     AD4CH0RES = 0x0UL;
     AD4CH1RES = 0x0UL;
+    AD4CH2RES = 0x0UL;
+    AD4CH3RES = 0x0UL;
     AD4CH0CNT = 0x0UL;
     AD4CH1CNT = 0x0UL;
+    AD4CH2CNT = 0x0UL;
+    AD4CH3CNT = 0x0UL;
     AD4CH0CMPLO = 0x0UL;
     AD4CH1CMPLO = 0x0UL;
+    AD4CH2CMPLO = 0x0UL;
+    AD4CH3CMPLO = 0x0UL;
     AD4CH0CMPHI = 0x0UL;
     AD4CH1CMPHI = 0x0UL;
+    AD4CH2CMPHI = 0x0UL;
+    AD4CH3CMPHI = 0x0UL;
 }
 
 void ADC4_SharedCorePowerEnable (void) 
@@ -332,6 +368,12 @@ void ADC4_PWMTriggerSourceSet(enum ADC4_CHANNEL channel, enum ADC_PWM_INSTANCE p
         case ADC4_Channel1:
                 AD4CH1CON1bits.TRG1SRC = adcTriggerValue;
                 break;
+        case ADC4_Channel2:
+                AD4CH2CON1bits.TRG1SRC = adcTriggerValue;
+                break;
+        case ADC4_Channel3:
+                AD4CH3CON1bits.TRG1SRC = adcTriggerValue;
+                break;
         default:
                 break;
     }
@@ -420,6 +462,60 @@ void __attribute__ ( ( __interrupt__, weak ) ) _AD4CH1Interrupt ( void )
     IFS6bits.AD4CH1IF = 0U;
 }
 
+/* cppcheck-suppress misra-c2012-8.4
+*
+* (Rule 8.4) REQUIRED: A compatible declaration shall be visible when an object or 
+* function with external linkage is defined
+*
+* Reasoning: Interrupt declaration are provided by compiler and are available
+* outside the driver folder
+*/
+void __attribute__ ( ( __interrupt__, weak ) ) _AD4CH2Interrupt ( void )
+{
+    uint32_t valADC4_Channel2;
+    //Read the ADC value from the ADCBUF
+    valADC4_Channel2 = AD4CH2DATA;
+
+    if(NULL != ADC4_ChannelHandler)
+    {
+        (*ADC4_ChannelHandler)(ADC4_Channel2, valADC4_Channel2);
+    }
+    if(NULL != ADC4_Result32BitChannelHandler)
+    {
+        (*ADC4_Result32BitChannelHandler)(ADC4_Channel2, valADC4_Channel2);
+    }
+
+    //clear the ADC4_Channel2 interrupt flag
+    IFS7bits.AD4CH2IF = 0U;
+}
+
+/* cppcheck-suppress misra-c2012-8.4
+*
+* (Rule 8.4) REQUIRED: A compatible declaration shall be visible when an object or 
+* function with external linkage is defined
+*
+* Reasoning: Interrupt declaration are provided by compiler and are available
+* outside the driver folder
+*/
+void __attribute__ ( ( __interrupt__, weak ) ) _AD4CH3Interrupt ( void )
+{
+    uint32_t valADC4_Channel3;
+    //Read the ADC value from the ADCBUF
+    valADC4_Channel3 = AD4CH3DATA;
+
+    if(NULL != ADC4_ChannelHandler)
+    {
+        (*ADC4_ChannelHandler)(ADC4_Channel3, valADC4_Channel3);
+    }
+    if(NULL != ADC4_Result32BitChannelHandler)
+    {
+        (*ADC4_Result32BitChannelHandler)(ADC4_Channel3, valADC4_Channel3);
+    }
+
+    //clear the ADC4_Channel3 interrupt flag
+    IFS7bits.AD4CH3IF = 0U;
+}
+
 
 void __attribute__ ( ( weak ) ) ADC4_ChannelTasks (enum ADC4_CHANNEL channel)
 {
@@ -448,6 +544,38 @@ void __attribute__ ( ( weak ) ) ADC4_ChannelTasks (enum ADC4_CHANNEL channel)
             {
                 //Read the ADC value from the ADCBUF
                 adcVal = AD4CH1DATA;
+
+                if(NULL != ADC4_ChannelHandler)
+                {
+                    (*ADC4_ChannelHandler)(channel, adcVal);
+                }
+                if(NULL != ADC4_Result32BitChannelHandler)
+                {
+                    (*ADC4_Result32BitChannelHandler)(channel, adcVal);
+                }
+            }
+            break;
+        case ADC4_Channel2:
+            if((bool)AD4STATbits.CH2RDY == 1U)
+            {
+                //Read the ADC value from the ADCBUF
+                adcVal = AD4CH2DATA;
+
+                if(NULL != ADC4_ChannelHandler)
+                {
+                    (*ADC4_ChannelHandler)(channel, adcVal);
+                }
+                if(NULL != ADC4_Result32BitChannelHandler)
+                {
+                    (*ADC4_Result32BitChannelHandler)(channel, adcVal);
+                }
+            }
+            break;
+        case ADC4_Channel3:
+            if((bool)AD4STATbits.CH3RDY == 1U)
+            {
+                //Read the ADC value from the ADCBUF
+                adcVal = AD4CH3DATA;
 
                 if(NULL != ADC4_ChannelHandler)
                 {

@@ -29,6 +29,9 @@ static uint16_t heartbeat_counter = 0U;
 // === Forward Declarations ===
 static int8_t PFC_FreqSelect_Read(void);
 static void   PFC_EnterFault(pfc_fault_code_t code);
+#if !PFC_DEBUG_MODE
+static uint16_t PFC_DeadTime_Decode(uint16_t adc_val);
+#endif
 
 // === Frequency Selection ===
 static int8_t PFC_FreqSelect_Read(void)
@@ -57,6 +60,43 @@ static int8_t PFC_FreqSelect_Read(void)
 
     return -1;
 }
+
+// === Dead-Time Selection ===
+#if !PFC_DEBUG_MODE
+// Maps a dead-time divider reading to a PGxDT register value.
+// Band 0 (lowest voltage) = 100ns, band 9 = 10ns. A reading that falls in a
+// guard band between positions returns the 100ns default rather than faulting,
+// so a miswired or out-of-tolerance divider degrades to the safest dead time.
+static uint16_t PFC_DeadTime_Decode(uint16_t adc_val)
+{
+    for (uint8_t i = 0U; i < DT_SELECT_POSITIONS; i++)
+    {
+        uint16_t center = DT_BAND_OFFSET + (uint16_t)i * DT_BAND_SPACING;
+        uint16_t low  = (center > DT_BAND_HALF_WIDTH) ? (center - DT_BAND_HALF_WIDTH) : 0U;
+        uint16_t high = center + DT_BAND_HALF_WIDTH;
+
+        // Extend the two end bands to the rails. Band 9's window would otherwise
+        // stop at 4045, so a divider sitting near VDD would miss it and revert to
+        // the 100ns default - the opposite end of the range from the 10ns asked for.
+        if (i == 0U)
+        {
+            low = 0U;
+        }
+        else if (i == (DT_SELECT_POSITIONS - 1U))
+        {
+            high = ADC_MAX;
+        }
+
+        if (adc_val >= low && adc_val <= high)
+        {
+            // Descending: band 0 -> 10 steps (100ns), band 9 -> 1 step (10ns)
+            return (uint16_t)((DT_SELECT_POSITIONS - i) * DT_COUNTS_PER_STEP);
+        }
+    }
+
+    return DT_COUNTS_DEFAULT;
+}
+#endif
 
 // === Initialization ===
 void PFC_App_Init(void)
@@ -92,6 +132,26 @@ void PFC_App_Init(void)
     // ADC trigger at ~50% of period for mid-inductor-current sampling
     uint32_t trig_point = (period_reg >> 1) & 0x000FFFF0UL;
     PG1TRIGA = trig_point;
+
+    // Dead time, set independently per generator from its own resistor divider.
+    // Debug mode skips the reads and uses the 100ns default.
+#if PFC_DEBUG_MODE
+    uint16_t dt_pwm1 = DT_COUNTS_DEFAULT;
+    uint16_t dt_pwm5 = DT_COUNTS_DEFAULT;
+#else
+    AD4SWTRGbits.CH2TRG = 1U;
+    while (!AD4STATbits.CH2RDY) { }
+    uint16_t dt_pwm1 = PFC_DeadTime_Decode((uint16_t)AD4CH2DATA);
+
+    AD4SWTRGbits.CH3TRG = 1U;
+    while (!AD4STATbits.CH3RDY) { }
+    uint16_t dt_pwm5 = PFC_DeadTime_Decode((uint16_t)AD4CH3DATA);
+#endif
+
+    // DTH and DTL get the same value: symmetric dead time on both edges.
+    // Written while both generators are off, so PGxSTAT.UPDATE is clear.
+    PG1DT = ((uint32_t)dt_pwm1 << 16) | (uint32_t)dt_pwm1;
+    PG5DT = ((uint32_t)dt_pwm5 << 16) | (uint32_t)dt_pwm5;
 
     // Duty cycle limits
     duty_max_target = period_int - DUTY_HEADROOM_COUNTS;

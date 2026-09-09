@@ -65,7 +65,9 @@ enum ADC4_CHANNEL
 {
     ADC4_Channel0,    /**<Channel Name:Channel_0 connected to ADC4_AN2 */
     ADC4_Channel1,    /**<Channel Name:Channel_1 connected to ADC4_AN4 */
-    ADC4_MAX_CHANNELS = 2    /**< Maximum number of channels configured by user for ADC4 */
+    ADC4_Channel2,    /**<Channel Name:Channel_2 connected to ADC4_AN0 */
+    ADC4_Channel3,    /**<Channel Name:Channel_3 connected to ADC4_AN1 */
+    ADC4_MAX_CHANNELS = 4    /**< Maximum number of channels configured by user for ADC4 */
 };
 
 /**
@@ -189,6 +191,12 @@ inline static void ADC4_ChannelSoftwareTriggerEnable(const enum ADC4_CHANNEL cha
         case ADC4_Channel1:
                 AD4SWTRGbits.CH1TRG = 0x1U;
                 break;
+        case ADC4_Channel2:
+                AD4SWTRGbits.CH2TRG = 0x1U;
+                break;
+        case ADC4_Channel3:
+                AD4SWTRGbits.CH3TRG = 0x1U;
+                break;
         default:
                 break;
     }
@@ -210,6 +218,12 @@ inline static void ADC4_ChannelSoftwareTriggerDisable(const enum ADC4_CHANNEL ch
                 break;
         case ADC4_Channel1:
                 AD4SWTRGbits.CH1TRG = 0x0U;
+                break;
+        case ADC4_Channel2:
+                AD4SWTRGbits.CH2TRG = 0x0U;
+                break;
+        case ADC4_Channel3:
+                AD4SWTRGbits.CH3TRG = 0x0U;
                 break;
         default:
                 break;
@@ -235,6 +249,12 @@ inline static uint16_t ADC4_SampleCountGet(const enum ADC4_CHANNEL channel)
                 break;
         case ADC4_Channel1:
                 count = AD4CH1CNTbits.CNT;
+                break;
+        case ADC4_Channel2:
+                count = AD4CH2CNTbits.CNT;
+                break;
+        case ADC4_Channel3:
+                count = AD4CH3CNTbits.CNT;
                 break;
         default:
                 break;
@@ -262,6 +282,12 @@ inline static uint16_t ADC4_SampleCountStatusGet(const enum ADC4_CHANNEL channel
         case ADC4_Channel1:
                 countStatus = AD4CH1CNTbits.CNTSTAT;
                 break;
+        case ADC4_Channel2:
+                countStatus = AD4CH2CNTbits.CNTSTAT;
+                break;
+        case ADC4_Channel3:
+                countStatus = AD4CH3CNTbits.CNTSTAT;
+                break;
         default:
                 break;
     }
@@ -288,6 +314,12 @@ inline static uint32_t ADC4_ConversionResultGet(const enum ADC4_CHANNEL channel)
                 break;
         case ADC4_Channel1:
                 result = AD4CH1DATA;
+                break;
+        case ADC4_Channel2:
+                result = AD4CH2DATA;
+                break;
+        case ADC4_Channel3:
+                result = AD4CH3DATA;
                 break;
         default:
                 break;
@@ -318,6 +350,12 @@ inline static bool ADC4_IsConversionComplete(const enum ADC4_CHANNEL channel)
         case ADC4_Channel1:
                 status = AD4STATbits.CH1RDY;
                 break;
+        case ADC4_Channel2:
+                status = AD4STATbits.CH2RDY;
+                break;
+        case ADC4_Channel3:
+                status = AD4STATbits.CH3RDY;
+                break;
         default:
                 break;
     }
@@ -342,6 +380,12 @@ inline static void ADC4_IndividualChannelInterruptEnable(const enum ADC4_CHANNEL
         case ADC4_Channel1:
                 IEC6bits.AD4CH1IE = 1U;
                 break;
+        case ADC4_Channel2:
+                IEC7bits.AD4CH2IE = 1U;
+                break;
+        case ADC4_Channel3:
+                IEC7bits.AD4CH3IE = 1U;
+                break;
         default:
                 break;
     }
@@ -363,6 +407,12 @@ inline static void ADC4_IndividualChannelInterruptDisable(const enum ADC4_CHANNE
                 break;
         case ADC4_Channel1:
                 IEC6bits.AD4CH1IE = 0U;
+                break;
+        case ADC4_Channel2:
+                IEC7bits.AD4CH2IE = 0U;
+                break;
+        case ADC4_Channel3:
+                IEC7bits.AD4CH3IE = 0U;
                 break;
         default:
                 break;
@@ -388,6 +438,12 @@ inline static void ADC4_IndividualChannelInterruptFlagClear(const enum ADC4_CHAN
         case ADC4_Channel1:
                 IFS6bits.AD4CH1IF = 0U;
                 break;
+        case ADC4_Channel2:
+                IFS7bits.AD4CH2IF = 0U;
+                break;
+        case ADC4_Channel3:
+                IFS7bits.AD4CH3IF = 0U;
+                break;
         default:
                 break;
     }
@@ -410,6 +466,12 @@ inline static void ADC4_IndividualChannelInterruptPrioritySet(const enum ADC4_CH
 				break;
 		case ADC4_Channel1:
 				IPC27bits.AD4CH1IP = priorityValue;
+				break;
+		case ADC4_Channel2:
+				IPC28bits.AD4CH2IP = priorityValue;
+				break;
+		case ADC4_Channel3:
+				IPC28bits.AD4CH3IP = priorityValue;
 				break;
 		default:
 				break;
