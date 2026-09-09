@@ -38,7 +38,8 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD2CH0Interrupt(void)
 }
 
 // ADC3 ISR: Current compensator output to PWM duty cycle
-// Runs at switching frequency. Maps OPA3 output linearly to PG1DC.
+// Runs at switching frequency. Maps OPA3 output linearly to PG1DC/PG5DC.
+// PG5 shares the period via MPER (MPERSEL) and is given the same duty as PG1.
 void __attribute__((__interrupt__, no_auto_psv)) _AD3CH0Interrupt(void)
 {
     uint16_t comp_out = (uint16_t)AD3CH0DATA;
@@ -59,7 +60,9 @@ void __attribute__((__interrupt__, no_auto_psv)) _AD3CH0Interrupt(void)
             duty = duty_max;
         }
 
-        PG1DC = duty & 0x000FFFF0UL;
+        duty &= 0x000FFFF0UL;
+        PG1DC = duty;
+        PG5DC = duty;
     }
 
     IFS6bits.AD3CH0IF = 0U;

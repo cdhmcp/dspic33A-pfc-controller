@@ -58,7 +58,7 @@ void PINS_Initialize(void)
     TRISA = 0x0FFDUL;
     TRISB = 0x0FFEUL;
     TRISC = 0x0EFFUL;
-    TRISD = 0x01FAUL;
+    TRISD = 0x0192UL;
 
 
     /****************************************************************************

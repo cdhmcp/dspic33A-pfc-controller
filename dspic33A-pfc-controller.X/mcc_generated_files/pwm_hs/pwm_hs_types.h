@@ -32,6 +32,7 @@
 enum PWM_GENERATOR
 {
     PWM_GENERATOR_1 =  1,       /**< Custom name of PWM generator 1 */
+    PWM_GENERATOR_5 =  5,       /**< Custom name of PWM generator 5 */
     PWM_MAX_GENERATOR
 };
 

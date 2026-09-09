@@ -62,6 +62,7 @@ static int8_t PFC_FreqSelect_Read(void)
 void PFC_App_Init(void)
 {
     PG1CONbits.ON = 0U;
+    PG5CONbits.ON = 0U;
     g_pfc_running = 0U;
 
     CMP3_Calibrate();
@@ -81,7 +82,11 @@ void PFC_App_Init(void)
 
     uint16_t period_int = pg1per_table[freq_index];
     uint32_t period_reg = (uint32_t)period_int << 4;
-    PG1PER = period_reg & 0x000FFFF0UL;
+
+    // PG1 and PG5 both have MPERSEL set (see PWM_Initialize), so the period comes
+    // from the master period register and their timebases stay synchronized.
+    // PG1PER/PG5PER are ignored while MPERSEL = 1.
+    MPER = period_reg & 0x000FFFF0UL;
     g_pg1per_cached = period_int;
 
     // ADC trigger at ~50% of period for mid-inductor-current sampling
@@ -128,7 +133,15 @@ void PFC_App_Init(void)
     PG1F1PCI2 = 0x0UL;
     PG1IOCON2bits.OVRDAT = 0U;
     PG1IOCON2bits.OVRENH = 0U;          // Allow PWM output (test duty from ADC3 input)
+    PG1IOCON2bits.OVRENL = 0U;
+    PG5IOCON2bits.OVRDAT = 0U;
+    PG5IOCON2bits.OVRENH = 0U;
+    PG5IOCON2bits.OVRENL = 0U;
     PG1STATbits.UPDREQ = 1U;            // Latch buffered PER/TRIGA/DC into active registers
+    PG5STATbits.UPDREQ = 1U;
+    // PG5 takes its start-of-cycle from PG1's trigger output (PG5CON SOCS = PG1,
+    // PG1EVT1 PGTRGSEL = EOC), so it must be armed before PG1's first EOC.
+    PG5CONbits.ON = 1U;                 // Waits for PG1 EOC; same period (MPER) and duty
     PG1CONbits.ON = 1U;                 // Start PWM timebase (triggers ADCs)
 #else
     g_pfc_state = PFC_STATE_STANDBY;
@@ -142,8 +155,16 @@ static void PFC_EnterFault(pfc_fault_code_t code)
 {
     g_pfc_running = 0U;
     PG1CONbits.ON = 0U;
+    PG5CONbits.ON = 0U;
+    // PG1 and PG5 are in Complementary output mode, so both H and L must be
+    // overridden. OVRDAT = 0 drives both pins low (override bypasses the
+    // dead-time logic, so the complement is not re-asserted on L).
     PG1IOCON2bits.OVRDAT = 0U;
     PG1IOCON2bits.OVRENH = 1U;
+    PG1IOCON2bits.OVRENL = 1U;
+    PG5IOCON2bits.OVRDAT = 0U;
+    PG5IOCON2bits.OVRENH = 1U;
+    PG5IOCON2bits.OVRENL = 1U;
 
     PG1F1PCI1bits.SWTERM = 1U;
 
@@ -195,6 +216,11 @@ void PFC_StateMachine_Tick(void)
                 g_duty_max_int = SOFT_START_DUTY_INITIAL;
                 PG1IOCON2bits.OVRDAT = 0U;
                 PG1IOCON2bits.OVRENH = 0U;
+                PG1IOCON2bits.OVRENL = 0U;
+                PG5IOCON2bits.OVRDAT = 0U;
+                PG5IOCON2bits.OVRENH = 0U;
+                PG5IOCON2bits.OVRENL = 0U;
+                PG5CONbits.ON = 1U;     // Arm client before PG1 issues its first EOC trigger
                 PG1CONbits.ON = 1U;
                 g_pfc_running = 1U;
             }
